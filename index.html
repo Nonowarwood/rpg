@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" />
+<meta name="theme-color" content="#0B0B0F" />
+<title>Ascend — Life RPG</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/variables.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/animations.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/screens.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     APP ROOT
+     ============================================================ -->
+<div id="app" class="app">
+
+  <!-- Ambient background glow layers (pure decoration, parallax) -->
+  <div class="bg-fx" aria-hidden="true">
+    <div class="bg-glow bg-glow--blue"></div>
+    <div class="bg-glow bg-glow--violet"></div>
+    <div class="bg-glow bg-glow--cyan"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <!-- ============ SCREENS ============ -->
+  <main class="screens" id="screens">
+
+    <!-- ---------- HOME ---------- -->
+    <section class="screen" id="screen-home" data-screen="home">
+      <header class="topbar">
+        <div class="topbar__greeting">
+          <span class="topbar__eyebrow" id="home-greeting">Bienvenue</span>
+          <span class="topbar__name" id="home-username">Joueur</span>
+        </div>
+        <button class="icon-btn" id="btn-open-profile-quick" data-nav="profile" aria-label="Profil">
+          <span class="icon-btn__glyph" id="quick-avatar-glyph">A</span>
+        </button>
+      </header>
+
+      <div class="player-card card-tilt" id="player-card">
+        <div class="player-card__glow"></div>
+        <div class="player-card__top">
+          <div class="avatar-ring">
+            <div class="avatar-ring__circle" id="home-avatar">A</div>
+            <div class="avatar-ring__level" id="home-level-badge">12</div>
+          </div>
+          <div class="player-card__identity">
+            <h1 class="player-card__name" id="home-player-name">Joueur</h1>
+            <p class="player-card__title" id="home-player-title">The Rising One</p>
+          </div>
+        </div>
+
+        <div class="xp-block">
+          <div class="xp-block__labels">
+            <span class="xp-block__level-label">Niveau <b id="home-level-num">12</b></span>
+            <span class="xp-block__amount" id="home-xp-amount">1240 / 1800 XP</span>
+          </div>
+          <div class="xp-bar">
+            <div class="xp-bar__fill" id="home-xp-fill" style="width:0%">
+              <div class="xp-bar__shine"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-tiles" id="home-stat-tiles">
+        <div class="stat-tile">
+          <span class="stat-tile__icon">🔥</span>
+          <span class="stat-tile__value" id="tile-streak">0</span>
+          <span class="stat-tile__label">Streak</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile__icon">⚔️</span>
+          <span class="stat-tile__value" id="tile-quests-today">0</span>
+          <span class="stat-tile__label">Quêtes du jour</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile__icon">✨</span>
+          <span class="stat-tile__value" id="tile-xp-today">0</span>
+          <span class="stat-tile__label">XP aujourd'hui</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile__icon">🏁</span>
+          <span class="stat-tile__value" id="tile-total-quests">0</span>
+          <span class="stat-tile__label">Total complétées</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile__icon">⏱️</span>
+          <span class="stat-tile__value" id="tile-focus-time">0m</span>
+          <span class="stat-tile__label">Temps focus</span>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2 class="section-title">Quêtes du jour</h2>
+        <button class="link-btn" data-nav="quests">Voir tout</button>
+      </div>
+      <div class="quest-preview-list" id="home-quest-preview"></div>
+    </section>
+
+    <!-- ---------- QUESTS ---------- -->
+    <section class="screen" id="screen-quests" data-screen="quests">
+      <header class="screen-header">
+        <h1 class="screen-header__title">Quêtes</h1>
+        <button class="fab-inline" id="btn-add-quest" aria-label="Nouvelle quête">+</button>
+      </header>
+
+      <div class="chip-row" id="category-filters">
+        <button class="chip chip--active" data-category="all">Toutes</button>
+      </div>
+
+      <div class="quest-list" id="quest-list"></div>
+    </section>
+
+    <!-- ---------- STATS ---------- -->
+    <section class="screen" id="screen-stats" data-screen="stats">
+      <header class="screen-header">
+        <h1 class="screen-header__title">Statistiques</h1>
+      </header>
+      <div class="stat-grid" id="stat-grid"></div>
+    </section>
+
+    <!-- ---------- ACHIEVEMENTS ---------- -->
+    <section class="screen" id="screen-achievements" data-screen="achievements">
+      <header class="screen-header">
+        <h1 class="screen-header__title">Succès</h1>
+        <span class="screen-header__meta" id="achievements-count">0 / 0</span>
+      </header>
+      <div class="achievement-grid" id="achievement-grid"></div>
+    </section>
+
+    <!-- ---------- PROFILE ---------- -->
+    <section class="screen" id="screen-profile" data-screen="profile">
+      <header class="screen-header">
+        <h1 class="screen-header__title">Profil</h1>
+      </header>
+
+      <div class="profile-card card-tilt">
+        <div class="avatar-ring avatar-ring--lg">
+          <div class="avatar-ring__circle" id="profile-avatar">A</div>
+          <div class="avatar-ring__level" id="profile-level-badge">12</div>
+        </div>
+        <input class="profile-name-input" id="profile-name-input" maxlength="20" value="Joueur" />
+        <p class="player-card__title" id="profile-title">The Rising One</p>
+
+        <div class="xp-block">
+          <div class="xp-block__labels">
+            <span class="xp-block__level-label">Niveau <b id="profile-level-num">12</b></span>
+            <span class="xp-block__amount" id="profile-xp-amount">1240 / 1800 XP</span>
+          </div>
+          <div class="xp-bar">
+            <div class="xp-bar__fill" id="profile-xp-fill" style="width:0%">
+              <div class="xp-bar__shine"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head"><h2 class="section-title">Aperçu</h2></div>
+      <div class="stat-tiles" id="profile-overview-tiles"></div>
+
+      <div class="section-head"><h2 class="section-title">Statistiques</h2></div>
+      <div class="mini-stat-grid" id="profile-mini-stats"></div>
+
+      <div class="section-head"><h2 class="section-title">Historique récent</h2></div>
+      <div class="history-list" id="profile-history"></div>
+    </section>
+
+  </main>
+
+  <!-- ============ BOTTOM NAVIGATION ============ -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <div class="bottom-nav__indicator" id="nav-indicator"></div>
+    <button class="nav-btn nav-btn--active" data-nav="home">
+      <span class="nav-btn__icon">🏠</span>
+      <span class="nav-btn__label">Accueil</span>
+    </button>
+    <button class="nav-btn" data-nav="quests">
+      <span class="nav-btn__icon">⚔️</span>
+      <span class="nav-btn__label">Quêtes</span>
+    </button>
+    <button class="nav-btn" data-nav="stats">
+      <span class="nav-btn__icon">📊</span>
+      <span class="nav-btn__label">Stats</span>
+    </button>
+    <button class="nav-btn" data-nav="achievements">
+      <span class="nav-btn__icon">🏆</span>
+      <span class="nav-btn__label">Succès</span>
+    </button>
+    <button class="nav-btn" data-nav="profile">
+      <span class="nav-btn__icon">👤</span>
+      <span class="nav-btn__label">Profil</span>
+    </button>
+  </nav>
+
+  <!-- ============ NOTIFICATIONS (toasts) ============ -->
+  <div class="notification-stack" id="notification-stack" aria-live="polite"></div>
+
+  <!-- ============ LEVEL UP OVERLAY ============ -->
+  <div class="overlay overlay--levelup" id="levelup-overlay">
+    <div class="levelup-particles" id="levelup-particles"></div>
+    <div class="levelup-content">
+      <span class="levelup-content__eyebrow">LEVEL UP</span>
+      <div class="levelup-content__level" id="levelup-level-num">13</div>
+      <p class="levelup-content__title" id="levelup-title-text">Adventurer</p>
+      <button class="btn-primary" id="btn-levelup-close">Continuer</button>
+    </div>
+  </div>
+
+  <!-- ============ ACHIEVEMENT UNLOCK OVERLAY ============ -->
+  <div class="overlay overlay--achievement" id="achievement-overlay">
+    <div class="achievement-content">
+      <span class="achievement-content__eyebrow">Achievement Unlocked</span>
+      <div class="achievement-content__icon" id="achievement-icon">🏆</div>
+      <p class="achievement-content__name" id="achievement-name">Premier pas</p>
+      <p class="achievement-content__desc" id="achievement-desc"></p>
+      <button class="btn-primary" id="btn-achievement-close">OK</button>
+    </div>
+  </div>
+
+  <!-- ============ QUEST MODAL ============ -->
+  <div class="overlay overlay--modal" id="quest-modal">
+    <div class="modal-sheet">
+      <div class="modal-sheet__handle"></div>
+      <h2 class="modal-sheet__title">Nouvelle quête</h2>
+
+      <form id="quest-form">
+        <label class="field">
+          <span class="field__label">Nom</span>
+          <input class="field__input" id="qf-name" type="text" maxlength="40" required placeholder="Faire les devoirs" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Description</span>
+          <input class="field__input" id="qf-description" type="text" maxlength="80" placeholder="Optionnel" />
+        </label>
+
+        <div class="field">
+          <span class="field__label">Catégorie</span>
+          <div class="option-row" id="qf-category-row"></div>
+        </div>
+
+        <div class="field">
+          <span class="field__label">Difficulté</span>
+          <div class="option-row" id="qf-difficulty-row"></div>
+        </div>
+
+        <div class="field">
+          <span class="field__label">Répétition</span>
+          <div class="option-row" id="qf-repeat-row">
+            <button type="button" class="option-pill option-pill--active" data-repeat="daily">Quotidienne</button>
+            <button type="button" class="option-pill" data-repeat="once">Unique</button>
+          </div>
+        </div>
+
+        <div class="modal-sheet__actions">
+          <button type="button" class="btn-secondary" id="btn-cancel-quest">Annuler</button>
+          <button type="submit" class="btn-primary">Créer la quête</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

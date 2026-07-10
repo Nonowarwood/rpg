@@ -1,0 +1,207 @@
+/* ==========================================================
+   ASCEND — APP SHELL / LAYOUT
+   Mobile-first. Desktop enhancements via min-width media queries.
+   ========================================================== */
+
+.app {
+  position: relative;
+  min-height: 100dvh;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  background: var(--gradient-void);
+  overflow: hidden;
+}
+
+/* ---------- Ambient background fx ---------- */
+.bg-fx {
+  position: fixed;
+  inset: 0;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.5;
+}
+.bg-glow--blue { width: 320px; height: 320px; top: -80px; left: -100px; background: var(--accent-blue); }
+.bg-glow--violet { width: 300px; height: 300px; top: 30%; right: -120px; background: var(--accent-violet); opacity: 0.35; }
+.bg-glow--cyan { width: 260px; height: 260px; bottom: 10%; left: -80px; background: var(--accent-cyan); opacity: 0.25; }
+.bg-grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 3px 3px;
+  opacity: 0.4;
+}
+
+/* ---------- Screens container ---------- */
+.screens {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  padding: calc(var(--safe-top) + var(--sp-4)) var(--sp-4) calc(var(--nav-height) + var(--sp-6));
+}
+
+.screen {
+  display: none;
+}
+.screen--active {
+  display: block;
+  animation: fadeIn var(--dur-base) var(--ease-standard) both;
+}
+
+/* ---------- Top bar (home) ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-5);
+}
+.topbar__greeting { display: flex; flex-direction: column; }
+.topbar__eyebrow {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+.topbar__name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ---------- Generic screen header (Quests/Stats/Achievements/Profile) ---------- */
+.screen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-5);
+}
+.screen-header__title {
+  font-size: 24px;
+  font-weight: 700;
+}
+.screen-header__meta {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+/* ---------- Quest preview list (home) ---------- */
+.quest-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* ---------- Bottom navigation ---------- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  height: calc(var(--nav-height) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  display: flex;
+  align-items: center;
+  background: rgba(15,15,20,0.75);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border-top: 1px solid var(--border-glass);
+  z-index: 200;
+}
+.bottom-nav__indicator {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 20%;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-primary);
+  box-shadow: var(--glow-blue);
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+.nav-btn {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--text-tertiary);
+  transition: color var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-out-back);
+}
+.nav-btn__icon {
+  font-size: 21px;
+  transition: transform var(--dur-base) var(--ease-out-back);
+}
+.nav-btn__label {
+  font-size: 10.5px;
+  font-weight: 600;
+}
+.nav-btn--active {
+  color: var(--text-primary);
+}
+.nav-btn--active .nav-btn__icon {
+  transform: translateY(-2px) scale(1.12);
+}
+.nav-btn:active { transform: scale(0.9); }
+
+/* ==========================================================
+   RESPONSIVE — Desktop / tablet enhancements
+   ========================================================== */
+@media (min-width: 720px) {
+  .app {
+    max-width: 900px;
+    border-left: 1px solid var(--border-glass);
+    border-right: 1px solid var(--border-glass);
+  }
+  .bg-fx, .bottom-nav { max-width: 900px; }
+
+  .screens {
+    padding: calc(var(--safe-top) + var(--sp-7)) var(--sp-8) calc(var(--nav-height) + var(--sp-8));
+  }
+
+  .stat-tiles {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .achievement-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mini-stat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .player-card__name { font-size: 24px; }
+  .levelup-content__level { font-size: 120px; }
+
+  .card-tilt:hover {
+    transform: perspective(900px) rotateX(3deg) rotateY(-3deg) translateY(-4px);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .quest-card:hover {
+    transform: translateX(4px);
+  }
+
+  .overlay--modal {
+    align-items: center;
+  }
+  .modal-sheet {
+    border-radius: var(--radius-xl);
+    border-bottom: 1px solid var(--border-glass-strong);
+    max-height: 80vh;
+  }
+}
+
+@media (min-width: 1100px) {
+  .app { max-width: 1040px; }
+  .bg-fx, .bottom-nav { max-width: 1040px; }
+}
