@@ -9,6 +9,7 @@ import { CATEGORIES, DIFFICULTIES } from "../core/config.js";
 import { completeQuest, deleteQuest, isQuestCompletedToday } from "../systems/questSystem.js";
 import { spawnXpPopup } from "./animations.js";
 import { playSound } from "../systems/soundSystem.js";
+import { icon } from "./icons.js";
 
 let activeCategoryFilter = "all";
 
@@ -21,7 +22,7 @@ export function questCardHTML(quest) {
   const done = isQuestCompletedToday(quest);
   return `
     <div class="quest-card${done ? " quest-card--done" : ""}" data-quest-id="${quest.id}" style="--card-accent:${cat.color}">
-      <div class="quest-card__icon">${cat.icon}</div>
+      <div class="quest-card__icon">${icon(cat.icon, { size: 22 })}</div>
       <div class="quest-card__body">
         <div class="quest-card__name">${quest.name}</div>
         <div class="quest-card__meta">
@@ -42,7 +43,7 @@ function buildCategoryFilters() {
     `<button class="chip${activeCategoryFilter === "all" ? " chip--active" : ""}" data-category="all">Toutes</button>`,
     ...Object.entries(CATEGORIES).map(
       ([key, cat]) =>
-        `<button class="chip${activeCategoryFilter === key ? " chip--active" : ""}" data-category="${key}">${cat.icon} ${cat.name}</button>`
+        `<button class="chip${activeCategoryFilter === key ? " chip--active" : ""}" data-category="${key}">${icon(cat.icon, { size: 14 })} ${cat.name}</button>`
     ),
   ];
   categoryFiltersEl.innerHTML = chips.join("");

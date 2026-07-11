@@ -9,6 +9,7 @@ import { xpProgress } from "../systems/xpSystem.js";
 import { currentTitle } from "../systems/titleSystem.js";
 import { statProgress } from "../systems/statsSystem.js";
 import { setBarWidth } from "./animations.js";
+import { icon } from "./icons.js";
 
 const nameInput = document.getElementById("profile-name-input");
 
@@ -39,10 +40,10 @@ export function renderProfileScreen() {
   setBarWidth(document.getElementById("profile-xp-fill"), progress.percent);
 
   document.getElementById("profile-overview-tiles").innerHTML = `
-    <div class="stat-tile"><span class="stat-tile__icon">🔥</span><span class="stat-tile__value">${state.streak.current}</span><span class="stat-tile__label">Streak actuel</span></div>
-    <div class="stat-tile"><span class="stat-tile__icon">🏅</span><span class="stat-tile__value">${state.streak.longest}</span><span class="stat-tile__label">Record streak</span></div>
-    <div class="stat-tile"><span class="stat-tile__icon">🗡️</span><span class="stat-tile__value">${state.counters.totalQuestsCompleted}</span><span class="stat-tile__label">Quêtes totales</span></div>
-    <div class="stat-tile"><span class="stat-tile__icon">⏱️</span><span class="stat-tile__value">${formatMinutes(state.meta.totalUsageMinutes)}</span><span class="stat-tile__label">Temps d'utilisation</span></div>
+    <div class="stat-tile"><span class="stat-tile__icon">${icon("flame", { size: 18 })}</span><span class="stat-tile__value">${state.streak.current}</span><span class="stat-tile__label">Streak actuel</span></div>
+    <div class="stat-tile"><span class="stat-tile__icon">${icon("star", { size: 18 })}</span><span class="stat-tile__value">${state.streak.longest}</span><span class="stat-tile__label">Record streak</span></div>
+    <div class="stat-tile"><span class="stat-tile__icon">${icon("sword", { size: 18 })}</span><span class="stat-tile__value">${state.counters.totalQuestsCompleted}</span><span class="stat-tile__label">Quêtes totales</span></div>
+    <div class="stat-tile"><span class="stat-tile__icon">${icon("clock", { size: 18 })}</span><span class="stat-tile__value">${formatMinutes(state.meta.totalUsageMinutes)}</span><span class="stat-tile__label">Temps d'utilisation</span></div>
   `;
 
   document.getElementById("profile-mini-stats").innerHTML = Object.entries(STATS)
@@ -50,7 +51,7 @@ export function renderProfileScreen() {
       const p = statProgress(key);
       return `
         <div class="mini-stat">
-          <span class="mini-stat__icon">${def.icon}</span>
+          <span class="mini-stat__icon">${icon(def.icon, { size: 18 })}</span>
           <span class="mini-stat__info">
             <span class="mini-stat__name">${def.name}</span>
             <span class="mini-stat__level">Niv. ${p.level}</span>

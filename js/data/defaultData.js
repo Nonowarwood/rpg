@@ -131,15 +131,16 @@ export function generateQuestId() {
 
 // ---------- Achievements catalogue ----------
 // `condition` receives a flat snapshot built by achievementSystem.buildSnapshot(state)
+// `icon` is a key into js/ui/icons.js, not a raw glyph.
 export const ACHIEVEMENTS = [
-  { id: "first_step",    name: "Premier pas",            desc: "Compléter votre toute première quête", icon: "👣", condition: (s) => s.totalQuestsCompleted >= 1 },
-  { id: "first_level",   name: "Premier niveau",         desc: "Atteindre le niveau 2",                 icon: "⭐", condition: (s) => s.level >= 2 },
-  { id: "xp_100",        name: "100 XP",                 desc: "Cumuler 100 XP au total",               icon: "✨", condition: (s) => s.totalXp >= 100 },
-  { id: "xp_1000",       name: "1000 XP",                desc: "Cumuler 1000 XP au total",              icon: "🌟", condition: (s) => s.totalXp >= 1000 },
-  { id: "xp_10000",      name: "10 000 XP",              desc: "Cumuler 10 000 XP au total",            icon: "💫", condition: (s) => s.totalXp >= 10000 },
-  { id: "quests_100",    name: "100 quêtes",             desc: "Compléter 100 quêtes",                  icon: "🗡️", condition: (s) => s.totalQuestsCompleted >= 100 },
-  { id: "streak_7",      name: "7 jours de suite",       desc: "Maintenir un streak de 7 jours",        icon: "🔥", condition: (s) => s.streakCurrent >= 7 },
-  { id: "streak_30",     name: "30 jours",               desc: "Maintenir un streak de 30 jours",       icon: "🔥", condition: (s) => s.streakCurrent >= 30 },
-  { id: "streak_100",    name: "100 jours",              desc: "Maintenir un streak de 100 jours",      icon: "🔥", condition: (s) => s.streakCurrent >= 100 },
-  { id: "all_categories",name: "Toutes les catégories",  desc: "Compléter une quête dans chaque catégorie", icon: "🏆", condition: (s) => s.categoriesCompleted >= 7 },
+  { id: "first_step",    name: "Premier pas",            desc: "Compléter votre toute première quête", icon: "footprints", condition: (s) => s.totalQuestsCompleted >= 1 },
+  { id: "first_level",   name: "Premier niveau",         desc: "Atteindre le niveau 2",                 icon: "star", condition: (s) => s.level >= 2 },
+  { id: "xp_100",        name: "100 XP",                 desc: "Cumuler 100 XP au total",               icon: "sparkle", condition: (s) => s.totalXp >= 100 },
+  { id: "xp_1000",       name: "1000 XP",                desc: "Cumuler 1000 XP au total",              icon: "star", condition: (s) => s.totalXp >= 1000 },
+  { id: "xp_10000",      name: "10 000 XP",              desc: "Cumuler 10 000 XP au total",            icon: "sparkle", condition: (s) => s.totalXp >= 10000 },
+  { id: "quests_100",    name: "100 quêtes",             desc: "Compléter 100 quêtes",                  icon: "sword", condition: (s) => s.totalQuestsCompleted >= 100 },
+  { id: "streak_7",      name: "7 jours de suite",       desc: "Maintenir un streak de 7 jours",        icon: "flame", condition: (s) => s.streakCurrent >= 7 },
+  { id: "streak_30",     name: "30 jours",               desc: "Maintenir un streak de 30 jours",       icon: "flame", condition: (s) => s.streakCurrent >= 30 },
+  { id: "streak_100",    name: "100 jours",              desc: "Maintenir un streak de 100 jours",      icon: "flame", condition: (s) => s.streakCurrent >= 100 },
+  { id: "all_categories",name: "Toutes les catégories",  desc: "Compléter une quête dans chaque catégorie", icon: "star", condition: (s) => s.categoriesCompleted >= 7 },
 ];

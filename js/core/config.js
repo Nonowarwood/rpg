@@ -42,14 +42,15 @@ export function titleForLevel(level) {
 }
 
 // ---------- Quest categories ----------
+// `icon` is a key into js/ui/icons.js, not a raw glyph.
 export const CATEGORIES = {
-  etudes:      { name: "Études",      icon: "📚", color: "#4C8DFF", stats: ["intelligence", "knowledge"] },
-  sport:       { name: "Sport",       icon: "💪", color: "#FF5A6A", stats: ["strength", "health"] },
-  sante:       { name: "Santé",       icon: "❤️", color: "#34E0A1", stats: ["health"] },
-  creativite:  { name: "Créativité",  icon: "🎨", color: "#B463FF", stats: ["creativity"] },
-  maison:      { name: "Maison",      icon: "🏠", color: "#FFC94C", stats: ["discipline"] },
-  travail:     { name: "Travail",     icon: "💼", color: "#2BD9E6", stats: ["wealth", "discipline"] },
-  personnel:   { name: "Personnel",   icon: "✨", color: "#FF7CD8", stats: ["social", "creativity"] },
+  etudes:      { name: "Études",      icon: "book",      color: "#4C8DFF", stats: ["intelligence", "knowledge"] },
+  sport:       { name: "Sport",       icon: "dumbbell",  color: "#FF5A6A", stats: ["strength", "health"] },
+  sante:       { name: "Santé",       icon: "heart",     color: "#34E0A1", stats: ["health"] },
+  creativite:  { name: "Créativité",  icon: "palette",   color: "#B463FF", stats: ["creativity"] },
+  maison:      { name: "Maison",      icon: "home",      color: "#FFC94C", stats: ["discipline"] },
+  travail:     { name: "Travail",     icon: "briefcase", color: "#2BD9E6", stats: ["wealth", "discipline"] },
+  personnel:   { name: "Personnel",   icon: "sparkle",   color: "#FF7CD8", stats: ["social", "creativity"] },
 };
 
 // ---------- Quest difficulties ----------
@@ -61,13 +62,14 @@ export const DIFFICULTIES = {
 };
 
 // ---------- RPG attributes ----------
+// `icon` is a key into js/ui/icons.js, not a raw glyph.
 export const STATS = {
-  intelligence: { name: "Intelligence", icon: "🧠" },
-  knowledge:    { name: "Knowledge",    icon: "📚" },
-  strength:     { name: "Strength",     icon: "💪" },
-  health:       { name: "Health",       icon: "❤️" },
-  creativity:   { name: "Creativity",   icon: "🎨" },
-  wealth:       { name: "Wealth",       icon: "💰" },
-  social:       { name: "Social",       icon: "😊" },
-  discipline:   { name: "Discipline",   icon: "⚡" },
+  intelligence: { name: "Intelligence", icon: "brain" },
+  knowledge:    { name: "Knowledge",    icon: "book" },
+  strength:     { name: "Strength",     icon: "dumbbell" },
+  health:       { name: "Health",       icon: "heart" },
+  creativity:   { name: "Creativity",   icon: "palette" },
+  wealth:       { name: "Wealth",       icon: "coin" },
+  social:       { name: "Social",       icon: "users" },
+  discipline:   { name: "Discipline",   icon: "zap" },
 };

@@ -75,27 +75,27 @@
 
       <div class="stat-tiles" id="home-stat-tiles">
         <div class="stat-tile">
-          <span class="stat-tile__icon">🔥</span>
+          <span class="stat-tile__icon" data-icon="flame" data-icon-size="18"></span>
           <span class="stat-tile__value" id="tile-streak">0</span>
           <span class="stat-tile__label">Streak</span>
         </div>
         <div class="stat-tile">
-          <span class="stat-tile__icon">⚔️</span>
+          <span class="stat-tile__icon" data-icon="sword" data-icon-size="18"></span>
           <span class="stat-tile__value" id="tile-quests-today">0</span>
           <span class="stat-tile__label">Quêtes du jour</span>
         </div>
         <div class="stat-tile">
-          <span class="stat-tile__icon">✨</span>
+          <span class="stat-tile__icon" data-icon="sparkle" data-icon-size="18"></span>
           <span class="stat-tile__value" id="tile-xp-today">0</span>
           <span class="stat-tile__label">XP aujourd'hui</span>
         </div>
         <div class="stat-tile">
-          <span class="stat-tile__icon">🏁</span>
+          <span class="stat-tile__icon" data-icon="flag" data-icon-size="18"></span>
           <span class="stat-tile__value" id="tile-total-quests">0</span>
           <span class="stat-tile__label">Total complétées</span>
         </div>
         <div class="stat-tile">
-          <span class="stat-tile__icon">⏱️</span>
+          <span class="stat-tile__icon" data-icon="clock" data-icon-size="18"></span>
           <span class="stat-tile__value" id="tile-focus-time">0m</span>
           <span class="stat-tile__label">Temps focus</span>
         </div>
@@ -112,7 +112,7 @@
     <section class="screen" id="screen-quests" data-screen="quests">
       <header class="screen-header">
         <h1 class="screen-header__title">Quêtes</h1>
-        <button class="fab-inline" id="btn-add-quest" aria-label="Nouvelle quête">+</button>
+        <button class="fab-inline" id="btn-add-quest" aria-label="Nouvelle quête" data-icon="plus" data-icon-size="20"></button>
       </header>
 
       <div class="chip-row" id="category-filters">
@@ -182,23 +182,23 @@
   <nav class="bottom-nav" id="bottom-nav">
     <div class="bottom-nav__indicator" id="nav-indicator"></div>
     <button class="nav-btn nav-btn--active" data-nav="home">
-      <span class="nav-btn__icon">🏠</span>
+      <span class="nav-btn__icon" data-icon="home" data-icon-size="21"></span>
       <span class="nav-btn__label">Accueil</span>
     </button>
     <button class="nav-btn" data-nav="quests">
-      <span class="nav-btn__icon">⚔️</span>
+      <span class="nav-btn__icon" data-icon="sword" data-icon-size="21"></span>
       <span class="nav-btn__label">Quêtes</span>
     </button>
     <button class="nav-btn" data-nav="stats">
-      <span class="nav-btn__icon">📊</span>
+      <span class="nav-btn__icon" data-icon="chart" data-icon-size="21"></span>
       <span class="nav-btn__label">Stats</span>
     </button>
     <button class="nav-btn" data-nav="achievements">
-      <span class="nav-btn__icon">🏆</span>
+      <span class="nav-btn__icon" data-icon="star" data-icon-size="21"></span>
       <span class="nav-btn__label">Succès</span>
     </button>
     <button class="nav-btn" data-nav="profile">
-      <span class="nav-btn__icon">👤</span>
+      <span class="nav-btn__icon" data-icon="user" data-icon-size="21"></span>
       <span class="nav-btn__label">Profil</span>
     </button>
   </nav>
@@ -221,7 +221,7 @@
   <div class="overlay overlay--achievement" id="achievement-overlay">
     <div class="achievement-content">
       <span class="achievement-content__eyebrow">Achievement Unlocked</span>
-      <div class="achievement-content__icon" id="achievement-icon">🏆</div>
+      <div class="achievement-content__icon" id="achievement-icon"></div>
       <p class="achievement-content__name" id="achievement-name">Premier pas</p>
       <p class="achievement-content__desc" id="achievement-desc"></p>
       <button class="btn-primary" id="btn-achievement-close">OK</button>

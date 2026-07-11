@@ -8,6 +8,7 @@ import { CATEGORIES, DIFFICULTIES } from "../core/config.js";
 import { createQuest } from "../systems/questSystem.js";
 import { spawnParticles } from "./animations.js";
 import { playSound } from "../systems/soundSystem.js";
+import { icon } from "./icons.js";
 
 // ---------- Quest creation modal ----------
 const questModal = document.getElementById("quest-modal");
@@ -30,7 +31,7 @@ function buildOptionRows() {
       ([key, cat]) => `
       <button type="button" class="option-pill${key === selectedCategory ? " option-pill--active" : ""}"
         data-category="${key}" style="--pill-accent:${cat.color}">
-        ${cat.icon} ${cat.name}
+        ${icon(cat.icon, { size: 14 })} ${cat.name}
       </button>`
     )
     .join("");
@@ -146,7 +147,7 @@ function drainBigOverlayQueue() {
     spawnParticles(levelupParticles, 30);
     playSound("levelup");
   } else {
-    achievementIcon.textContent = next.icon;
+    achievementIcon.innerHTML = icon(next.icon, { size: 56 });
     achievementName.textContent = next.name;
     achievementDesc.textContent = next.desc;
     achievementOverlay.classList.add("overlay--active");

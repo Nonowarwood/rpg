@@ -137,7 +137,7 @@
   transition: color var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-out-back);
 }
 .nav-btn__icon {
-  font-size: 21px;
+  display: inline-block;
   transition: transform var(--dur-base) var(--ease-out-back);
 }
 .nav-btn__label {
@@ -155,16 +155,15 @@
 /* ==========================================================
    RESPONSIVE — Desktop / tablet enhancements
    ========================================================== */
+
+/* Tablet: still one scrolling column with the bottom nav, just
+   roomier. The real "fill the screen" layout kicks in at 1024px. */
 @media (min-width: 720px) {
-  .app {
-    max-width: 900px;
-    border-left: 1px solid var(--border-glass);
-    border-right: 1px solid var(--border-glass);
-  }
-  .bg-fx, .bottom-nav { max-width: 900px; }
+  .app { max-width: 720px; }
+  .bg-fx, .bottom-nav { max-width: 720px; }
 
   .screens {
-    padding: calc(var(--safe-top) + var(--sp-7)) var(--sp-8) calc(var(--nav-height) + var(--sp-8));
+    padding: calc(var(--safe-top) + var(--sp-7)) var(--sp-7) calc(var(--nav-height) + var(--sp-8));
   }
 
   .stat-tiles {
@@ -201,7 +200,50 @@
   }
 }
 
-@media (min-width: 1100px) {
-  .app { max-width: 1040px; }
-  .bg-fx, .bottom-nav { max-width: 1040px; }
+/* Desktop: the app shell (background glow + nav) goes full-bleed
+   instead of floating a mobile-width column in dead black space.
+   Bottom nav becomes a fixed left sidebar; content spreads into
+   multi-column grids up to a comfortable reading max-width. */
+@media (min-width: 1024px) {
+  .app { max-width: none; }
+  .bg-fx { max-width: none; }
+
+  .bottom-nav {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    max-width: none;
+    width: var(--sidebar-width);
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--sp-7);
+    padding-bottom: 0;
+    border-top: none;
+    border-right: 1px solid var(--border-glass);
+  }
+  .bottom-nav__indicator { display: none; }
+  .nav-btn { flex: none; height: auto; padding: var(--sp-3) 0; }
+
+  .screens {
+    max-width: var(--content-max-width);
+    margin-left: var(--sidebar-width);
+    padding: calc(var(--safe-top) + var(--sp-8)) var(--sp-8) var(--sp-8);
+  }
+
+  .quest-list, .quest-preview-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3);
+    align-content: start;
+  }
+  .quest-list .quest-card,
+  .quest-preview-list .quest-card {
+    margin-bottom: 0;
+  }
+
+  .achievement-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

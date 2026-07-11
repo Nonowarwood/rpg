@@ -6,28 +6,29 @@
 // ============================================================
 
 import { playSound } from "../systems/soundSystem.js";
+import { icon } from "./icons.js";
 
 const stack = document.getElementById("notification-stack");
 const MAX_VISIBLE = 3;
 const AUTO_DISMISS_MS = 3200;
 
 const TYPE_ICON = {
-  xp: "✨",
-  quest: "⚔️",
-  level: "🌟",
-  achievement: "🏆",
-  title: "👑",
-  streak: "🔥",
-  stat: "📈",
+  xp: "sparkle",
+  quest: "sword",
+  level: "star",
+  achievement: "star",
+  title: "crown",
+  streak: "flame",
+  stat: "chart",
 };
 
-export function showToast({ type = "xp", title, desc = "", sound = "notification", icon } = {}) {
+export function showToast({ type = "xp", title, desc = "", sound = "notification", icon: iconOverride } = {}) {
   if (!stack) return;
 
   const toast = document.createElement("div");
   toast.className = `toast toast--${type}`;
   toast.innerHTML = `
-    <span class="toast__icon">${icon || TYPE_ICON[type] || "✨"}</span>
+    <span class="toast__icon">${icon(iconOverride || TYPE_ICON[type] || "sparkle", { size: 20 })}</span>
     <span class="toast__body">
       <span class="toast__title">${title}</span>
       ${desc ? `<span class="toast__desc">${desc}</span>` : ""}

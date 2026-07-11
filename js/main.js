@@ -12,6 +12,7 @@ import { currentTitle } from "./systems/titleSystem.js";
 import { initNavigation } from "./ui/navigation.js";
 import { showToast } from "./ui/notifications.js";
 import { showLevelUpOverlay, queueAchievementOverlay } from "./ui/modals.js";
+import { hydrateStaticIcons } from "./ui/icons.js";
 
 import { renderHome } from "./ui/homeScreen.js";
 import { renderQuestsScreen } from "./ui/questsScreen.js";
@@ -71,6 +72,7 @@ function trackUsageTime() {
 }
 
 function boot() {
+  hydrateStaticIcons();
   rolloverDayIfNeeded();
   checkStreakDecay();
   initNavigation();

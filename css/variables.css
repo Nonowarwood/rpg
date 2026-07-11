@@ -79,6 +79,8 @@
   /* ---------- Layout ---------- */
   --nav-height: 76px;
   --app-max-width: 560px;
+  --sidebar-width: 92px;
+  --content-max-width: 1240px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-top: env(safe-area-inset-top, 0px);
 }

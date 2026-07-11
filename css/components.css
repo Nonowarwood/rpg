@@ -2,6 +2,13 @@
    ASCEND — COMPONENTS
    ========================================================== */
 
+/* ---------- Icons (js/ui/icons.js output) ---------- */
+.icon {
+  display: inline-block;
+  vertical-align: -4px;
+  flex-shrink: 0;
+}
+
 /* ---------- Buttons ---------- */
 .btn-primary {
   display: inline-flex;
@@ -70,8 +77,6 @@
   border-radius: var(--radius-pill);
   background: var(--gradient-primary);
   color: #fff;
-  font-size: 22px;
-  line-height: 1;
   display: flex; align-items: center; justify-content: center;
   box-shadow: var(--glow-blue);
   transition: transform var(--dur-fast) var(--ease-out-back);
@@ -222,7 +227,6 @@
   transition: transform var(--dur-fast) var(--ease-standard), border-color var(--dur-fast);
 }
 .stat-tile:active { transform: scale(0.96); }
-.stat-tile__icon { font-size: 18px; }
 .stat-tile__value {
   font-family: var(--font-display);
   font-size: 22px;
@@ -305,8 +309,8 @@
   width: 44px; height: 44px;
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--card-accent, var(--accent-blue)) 18%, transparent);
+  color: var(--card-accent, var(--accent-blue));
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
   flex-shrink: 0;
 }
 .quest-card__body { flex: 1; min-width: 0; }
@@ -391,8 +395,8 @@
   width: 46px; height: 46px;
   border-radius: var(--radius-sm);
   background: var(--bg-glass-strong);
+  color: var(--accent-blue-soft);
   display: flex; align-items: center; justify-content: center;
-  font-size: 21px;
   flex-shrink: 0;
 }
 .stat-card__body { flex: 1; }
@@ -433,7 +437,6 @@
   background: var(--bg-glass);
   border: 1px solid var(--border-glass);
 }
-.mini-stat__icon { font-size: 17px; }
 .mini-stat__info { display: flex; flex-direction: column; }
 .mini-stat__name { font-size: 11px; color: var(--text-tertiary); font-weight: 600; }
 .mini-stat__level { font-size: 14px; font-weight: 700; }
@@ -455,7 +458,6 @@
 }
 .achievement-badge:active { transform: scale(0.95); }
 .achievement-badge__icon {
-  font-size: 30px;
   margin-bottom: var(--sp-2);
   filter: grayscale(1) opacity(0.35);
 }
@@ -669,7 +671,6 @@
 }
 
 .achievement-content__icon {
-  font-size: 64px;
   margin-bottom: var(--sp-4);
   filter: drop-shadow(var(--glow-gold));
 }

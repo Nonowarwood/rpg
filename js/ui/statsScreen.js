@@ -6,6 +6,7 @@
 import { STATS } from "../core/config.js";
 import { statProgress } from "../systems/statsSystem.js";
 import { setBarWidth } from "./animations.js";
+import { icon } from "./icons.js";
 
 const gridEl = document.getElementById("stat-grid");
 
@@ -15,7 +16,7 @@ export function renderStatsScreen() {
       const p = statProgress(key);
       return `
         <div class="stat-card">
-          <div class="stat-card__icon">${def.icon}</div>
+          <div class="stat-card__icon">${icon(def.icon, { size: 22 })}</div>
           <div class="stat-card__body">
             <div class="stat-card__top">
               <span class="stat-card__name">${def.name}</span>
