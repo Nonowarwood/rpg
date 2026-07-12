@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="css/variables.css" />
 <link rel="stylesheet" href="css/base.css" />
@@ -145,37 +145,59 @@
         <h1 class="screen-header__title">Profil</h1>
       </header>
 
-      <div class="profile-card card-tilt">
-        <div class="avatar-ring avatar-ring--lg">
-          <div class="avatar-ring__circle" id="profile-avatar">A</div>
-          <div class="avatar-ring__level" id="profile-level-badge">12</div>
-        </div>
-        <input class="profile-name-input" id="profile-name-input" maxlength="20" value="Joueur" />
-        <p class="player-card__title" id="profile-title">The Rising One</p>
+      <div class="profile-cols">
+        <div class="profile-cols__left">
+          <div class="profile-card card-tilt">
+            <div class="avatar-ring avatar-ring--lg">
+              <div class="avatar-ring__circle" id="profile-avatar">A</div>
+              <div class="avatar-ring__level" id="profile-level-badge">12</div>
+            </div>
+            <input class="profile-name-input" id="profile-name-input" maxlength="20" value="Joueur" />
+            <p class="player-card__title" id="profile-title">The Rising One</p>
 
-        <div class="xp-block">
-          <div class="xp-block__labels">
-            <span class="xp-block__level-label">Niveau <b id="profile-level-num">12</b></span>
-            <span class="xp-block__amount" id="profile-xp-amount">1240 / 1800 XP</span>
+            <div class="xp-block">
+              <div class="xp-block__labels">
+                <span class="xp-block__level-label">Niveau <b id="profile-level-num">12</b></span>
+                <span class="xp-block__amount" id="profile-xp-amount">1240 / 1800 XP</span>
+              </div>
+              <div class="xp-bar">
+                <div class="xp-bar__fill" id="profile-xp-fill" style="width:0%">
+                  <div class="xp-bar__shine"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="xp-bar">
-            <div class="xp-bar__fill" id="profile-xp-fill" style="width:0%">
-              <div class="xp-bar__shine"></div>
+
+          <div class="auth-row" id="profile-auth-row"></div>
+
+          <div class="section-head"><h2 class="section-title">Préférences</h2></div>
+          <div class="pref-row">
+            <span class="pref-row__label">Navigation</span>
+            <div class="option-row" id="pref-nav-row">
+              <button class="option-pill" data-navpos="bottom">En bas</button>
+              <button class="option-pill" data-navpos="top">En haut</button>
+            </div>
+          </div>
+          <div class="pref-row">
+            <span class="pref-row__label">Sons</span>
+            <div class="option-row" id="pref-sound-row">
+              <button class="option-pill" data-sound="on">Activés</button>
+              <button class="option-pill" data-sound="off">Coupés</button>
             </div>
           </div>
         </div>
+
+        <div class="profile-cols__right">
+          <div class="section-head"><h2 class="section-title">Aperçu</h2></div>
+          <div class="stat-tiles" id="profile-overview-tiles"></div>
+
+          <div class="section-head"><h2 class="section-title">Statistiques</h2></div>
+          <div class="mini-stat-grid" id="profile-mini-stats"></div>
+
+          <div class="section-head"><h2 class="section-title">Historique récent</h2></div>
+          <div class="history-list" id="profile-history"></div>
+        </div>
       </div>
-
-      <div class="auth-row" id="profile-auth-row"></div>
-
-      <div class="section-head"><h2 class="section-title">Aperçu</h2></div>
-      <div class="stat-tiles" id="profile-overview-tiles"></div>
-
-      <div class="section-head"><h2 class="section-title">Statistiques</h2></div>
-      <div class="mini-stat-grid" id="profile-mini-stats"></div>
-
-      <div class="section-head"><h2 class="section-title">Historique récent</h2></div>
-      <div class="history-list" id="profile-history"></div>
     </section>
 
   </main>

@@ -9,7 +9,7 @@ import { STATS } from "./core/config.js";
 import { checkStreakDecay } from "./systems/streakSystem.js";
 import { currentTitle } from "./systems/titleSystem.js";
 
-import { initNavigation } from "./ui/navigation.js";
+import { initNavigation, applyNavPosition } from "./ui/navigation.js";
 import { showToast } from "./ui/notifications.js";
 import { showLevelUpOverlay, queueAchievementOverlay } from "./ui/modals.js";
 import { hydrateStaticIcons } from "./ui/icons.js";
@@ -69,6 +69,7 @@ on("auth:changed", (user) => {
 
 on("state:hydrated", () => {
   showToast({ type: "achievement", title: "Progression synchronisée", desc: "Récupérée depuis le cloud" });
+  applyNavPosition(state.settings.navPosition); // cloud save may carry a different preference
   refreshAll();
 });
 
@@ -103,6 +104,7 @@ function trackUsageTime() {
 
 function boot() {
   hydrateStaticIcons();
+  applyNavPosition(state.settings.navPosition);
   rolloverDayIfNeeded();
   checkStreakDecay();
   initNavigation();

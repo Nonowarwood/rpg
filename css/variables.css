@@ -76,8 +76,11 @@
   --glow-success: none;
   --glow-red: 0 0 22px rgba(224, 16, 46, 0.35);
 
-  /* ---------- Typography ---------- */
-  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  /* ---------- Typography ----------
+     Bungee ships one weight (400) and draws wide — display sizes
+     across components.css are tuned down accordingly. Never request
+     another weight; browsers would synthesize an ugly faux-bold. */
+  --font-display: 'Bungee', 'Arial Black', sans-serif;
   --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* ---------- Spacing scale ---------- */
@@ -101,7 +104,6 @@
   /* ---------- Layout ---------- */
   --nav-height: 76px;
   --app-max-width: 560px;
-  --sidebar-width: 92px;
   --content-max-width: 1240px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-top: env(safe-area-inset-top, 0px);

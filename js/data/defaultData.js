@@ -43,6 +43,7 @@ export function createDefaultState() {
     categoriesCompleted: [], // list of category keys that have >=1 completion ever
     settings: {
       soundEnabled: true,
+      navPosition: "bottom", // "bottom" | "top"
     },
     meta: {
       sessionStart: Date.now(),

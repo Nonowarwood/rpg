@@ -12,9 +12,43 @@ import { emit } from "../core/eventBus.js";
 import { setBarWidth } from "./animations.js";
 import { icon } from "./icons.js";
 import { avatarInnerHTML } from "./avatar.js";
+import { applyNavPosition } from "./navigation.js";
+import { playSound } from "../systems/soundSystem.js";
 
 const nameInput = document.getElementById("profile-name-input");
 const authRowEl = document.getElementById("profile-auth-row");
+const prefNavRow = document.getElementById("pref-nav-row");
+const prefSoundRow = document.getElementById("pref-sound-row");
+
+// ---------- Preferences (nav position, sound) ----------
+function renderPrefs() {
+  [...prefNavRow.children].forEach((btn) =>
+    btn.classList.toggle("option-pill--active", btn.dataset.navpos === state.settings.navPosition)
+  );
+  const soundKey = state.settings.soundEnabled ? "on" : "off";
+  [...prefSoundRow.children].forEach((btn) =>
+    btn.classList.toggle("option-pill--active", btn.dataset.sound === soundKey)
+  );
+}
+
+prefNavRow.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-navpos]");
+  if (!btn) return;
+  state.settings.navPosition = btn.dataset.navpos;
+  persist();
+  applyNavPosition(state.settings.navPosition);
+  renderPrefs();
+  playSound("click");
+});
+
+prefSoundRow.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-sound]");
+  if (!btn) return;
+  state.settings.soundEnabled = btn.dataset.sound === "on";
+  persist();
+  renderPrefs();
+  playSound("click");
+});
 
 const GOOGLE_LOGO_SVG = `<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
   <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
@@ -78,6 +112,7 @@ export function renderProfileScreen() {
   document.getElementById("profile-level-num").textContent = state.level;
   document.getElementById("profile-title").textContent = currentTitle();
   renderAuthRow();
+  renderPrefs();
 
   if (document.activeElement !== nameInput) nameInput.value = state.profile.name;
 

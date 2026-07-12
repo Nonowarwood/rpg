@@ -18,7 +18,7 @@
   border: none;
   text-align: center;
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -39,9 +39,79 @@
   text-align: left;
 }
 
+/* ---------- Profile preferences ---------- */
+.pref-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0 var(--sp-3);
+}
+.pref-row__label {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+/* Profile columns: inert on mobile (display:contents keeps the
+   original single-column flow), a real 2-column grid on desktop. */
+.profile-cols,
+.profile-cols__left,
+.profile-cols__right {
+  display: contents;
+}
+
 /* ---------- Achievements screen ---------- */
 #achievement-grid {
   padding-bottom: var(--sp-6);
+}
+
+/* ==========================================================
+   Desktop screen grids (>=1024px)
+   ========================================================== */
+@media (min-width: 1024px) {
+  /* Home: player identity column on the left, quest feed on the
+     right — the screen reads like a game HUD, not a phone column. */
+  #screen-home.screen--active {
+    display: grid;
+    grid-template-columns: minmax(380px, 5fr) 7fr;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+      "topbar topbar"
+      "player qhead"
+      "player qlist"
+      "tiles  qlist";
+    column-gap: var(--sp-8);
+    align-content: start;
+  }
+  #screen-home .topbar { grid-area: topbar; }
+  #screen-home .player-card { grid-area: player; align-self: start; margin-bottom: var(--sp-3); }
+  #screen-home .stat-tiles {
+    grid-area: tiles;
+    grid-template-columns: repeat(2, 1fr);
+    align-self: start;
+    margin-bottom: 0;
+  }
+  #screen-home .section-head { grid-area: qhead; }
+  #screen-home .quest-preview-list { grid-area: qlist; align-content: start; }
+
+  /* Profile: identity + account + preferences left, data right. */
+  .profile-cols {
+    display: grid;
+    grid-template-columns: minmax(360px, 5fr) 7fr;
+    column-gap: var(--sp-8);
+    align-items: start;
+  }
+  .profile-cols__left,
+  .profile-cols__right {
+    display: block;
+    min-width: 0;
+  }
+  #screen-profile .stat-tiles {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* ---------- Focus ring accessibility (keyboard users) ---------- */

@@ -60,7 +60,7 @@
 .icon-btn__glyph {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 16px;
+  font-size: 13px;
   color: var(--accent-red);
 }
 .icon-btn__glyph img,
@@ -202,11 +202,11 @@
 .player-card__name {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 24px;
+  font-size: 19px;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: var(--text-primary);
-  line-height: 1;
+  line-height: 1.1;
 }
 .player-card__title {
   display: inline-block;
@@ -234,10 +234,10 @@
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 26px;
+  font-size: 20px;
   color: var(--text-primary);
 }
-.avatar-ring--lg .avatar-ring__circle { font-size: 36px; }
+.avatar-ring--lg .avatar-ring__circle { font-size: 28px; }
 .avatar-ring__level {
   position: absolute;
   bottom: -6px; right: -8px;
@@ -248,7 +248,7 @@
   color: var(--bg-void);
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 12px;
+  font-size: 10px;
   display: flex; align-items: center; justify-content: center;
   transform: rotate(-3deg);
 }
@@ -313,7 +313,7 @@
 .stat-tile__value {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 24px;
+  font-size: 19px;
   font-variant-numeric: tabular-nums;
   color: var(--text-primary);
   line-height: 1.1;
@@ -346,7 +346,7 @@
 .section-title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 17px;
+  font-size: 13.5px;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: var(--text-primary);
@@ -473,7 +473,7 @@
   transform: translateY(-50%);
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 17px;
+  font-size: 14px;
   color: var(--accent-yellow);
   pointer-events: none;
   animation: floatUpFade 1100ms var(--ease-out-expo) forwards;
@@ -728,6 +728,19 @@
   pointer-events: auto;
 }
 
+/* Hard red flash when the level-up overlay opens (P5 "all-out"). */
+.overlay--levelup::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-red);
+  opacity: 0;
+  pointer-events: none;
+}
+.overlay--levelup.overlay--active::before {
+  animation: hitFlash 480ms var(--ease-out-expo) both;
+}
+
 .levelup-content, .achievement-content {
   position: relative;
   text-align: center;
@@ -738,8 +751,8 @@
   display: inline-block;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 15px;
-  letter-spacing: 0.2em;
+  font-size: 12px;
+  letter-spacing: 0.14em;
   color: var(--bg-void);
   background: var(--accent-red);
   padding: 5px 18px;
@@ -756,7 +769,7 @@
 .levelup-content__level {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 108px;
+  font-size: 78px;
   line-height: 1;
   color: var(--text-primary);
   -webkit-text-stroke: 2px var(--accent-red);
@@ -797,7 +810,7 @@
 .achievement-content__name {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 22px;
+  font-size: 17px;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: var(--accent-yellow);
@@ -836,7 +849,7 @@
 .modal-sheet__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 22px;
+  font-size: 17px;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   margin-bottom: var(--sp-5);

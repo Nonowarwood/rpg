@@ -1,5 +1,9 @@
 /* ==========================================================
-   ASCEND — KEYFRAMES & REUSABLE ANIMATION CLASSES
+   ASCEND — KEYFRAMES & MOTION
+   The motion language matches the "heist" direction: entrances
+   slide in on a diagonal with a slight skew and snap straight,
+   lists cascade in with a stagger, and big moments open on a
+   hard red flash — punchy and quick, never floaty.
    ========================================================== */
 
 /* ---------- Fade / rise ---------- */
@@ -14,7 +18,7 @@
 }
 
 @keyframes riseInSmall {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -24,14 +28,23 @@
   100% { opacity: 1; transform: scale(1); }
 }
 
+/* Screen switch: slides in off-axis with a skew, snaps straight. */
+@keyframes screenIn {
+  0%   { opacity: 0; transform: translateX(28px) skewX(-3deg); }
+  60%  { opacity: 1; transform: translateX(-4px) skewX(0.6deg); }
+  100% { opacity: 1; transform: translateX(0) skewX(0); }
+}
+
+/* Toasts: same skewed entrance, from the right. */
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(28px); }
-  to   { opacity: 1; transform: translateX(0); }
+  0%   { opacity: 0; transform: translateX(44px) skewX(-8deg); }
+  70%  { opacity: 1; transform: translateX(-4px) skewX(0); }
+  100% { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slideOutRight {
   from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 0; transform: translateX(40px) skewX(-6deg); }
 }
 
 @keyframes sheetUp {
@@ -39,33 +52,24 @@
   to   { transform: translateY(0); }
 }
 
-/* ---------- Glow / pulse ---------- */
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: var(--glow-blue); }
-  50%      { box-shadow: 0 0 1px rgba(76,141,255,0.8), 0 0 60px rgba(76,141,255,0.45); }
-}
-
+/* ---------- Shine ---------- */
 @keyframes shimmer {
   0%   { transform: translateX(-120%); }
   100% { transform: translateX(220%); }
 }
 
-@keyframes ringPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(76,141,255,0.45); }
-  100% { box-shadow: 0 0 0 14px rgba(76,141,255,0); }
+/* ---------- Big moments ---------- */
+/* Hard red flash behind the level-up card, P5 "all-out attack" style. */
+@keyframes hitFlash {
+  0%   { opacity: 0.9; }
+  100% { opacity: 0; }
 }
 
-/* ---------- Level up ---------- */
 @keyframes levelUpBurst {
   0%   { opacity: 0; transform: scale(0.4) rotate(-8deg); }
   45%  { opacity: 1; transform: scale(1.12) rotate(2deg); }
   70%  { transform: scale(0.98) rotate(0deg); }
   100% { transform: scale(1); }
-}
-
-@keyframes levelUpGlowSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
 }
 
 @keyframes particleFly {
@@ -82,25 +86,49 @@
 }
 
 @keyframes checkBurst {
-  0%   { transform: scale(0.5); opacity: 0; }
-  50%  { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
+  0%   { transform: scale(0.4) rotate(-45deg); }
+  55%  { transform: scale(1.25) rotate(8deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 
-@keyframes shakeSmall {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
+@keyframes navPop {
+  0%   { transform: translateY(-2px) scale(0.7); }
+  60%  { transform: translateY(-3px) scale(1.28); }
+  100% { transform: translateY(-2px) scale(1.12); }
 }
 
-@keyframes tiltFloat {
-  0%, 100% { transform: perspective(900px) rotateX(2deg) rotateY(-2deg) translateY(0); }
-  50%      { transform: perspective(900px) rotateX(1deg) rotateY(-1deg) translateY(-4px); }
+/* ==========================================================
+   Applied motion (entrances + stagger)
+   ========================================================== */
+
+/* List/tile entrances — every re-render cascades back in. */
+.stat-card,
+.achievement-badge,
+.stat-tile,
+.mini-stat,
+.history-item {
+  animation: riseInSmall var(--dur-base) var(--ease-out-expo) both;
 }
 
-@keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+/* Stagger ramp, per parent container. .quest-card gets its
+   entrance animation in components.css; it shares the ramp here. */
+.quest-card:nth-child(2), .stat-card:nth-child(2), .achievement-badge:nth-child(2), .stat-tile:nth-child(2), .mini-stat:nth-child(2), .history-item:nth-child(2) { animation-delay: 40ms; }
+.quest-card:nth-child(3), .stat-card:nth-child(3), .achievement-badge:nth-child(3), .stat-tile:nth-child(3), .mini-stat:nth-child(3), .history-item:nth-child(3) { animation-delay: 80ms; }
+.quest-card:nth-child(4), .stat-card:nth-child(4), .achievement-badge:nth-child(4), .stat-tile:nth-child(4), .mini-stat:nth-child(4), .history-item:nth-child(4) { animation-delay: 120ms; }
+.quest-card:nth-child(5), .stat-card:nth-child(5), .achievement-badge:nth-child(5), .stat-tile:nth-child(5), .mini-stat:nth-child(5), .history-item:nth-child(5) { animation-delay: 160ms; }
+.quest-card:nth-child(6), .stat-card:nth-child(6), .achievement-badge:nth-child(6), .stat-tile:nth-child(6), .mini-stat:nth-child(6), .history-item:nth-child(6) { animation-delay: 200ms; }
+.quest-card:nth-child(7), .stat-card:nth-child(7), .achievement-badge:nth-child(7), .stat-tile:nth-child(7), .mini-stat:nth-child(7), .history-item:nth-child(7) { animation-delay: 240ms; }
+.quest-card:nth-child(8), .stat-card:nth-child(8), .achievement-badge:nth-child(8), .stat-tile:nth-child(8), .mini-stat:nth-child(8), .history-item:nth-child(8) { animation-delay: 280ms; }
+.quest-card:nth-child(n+9), .stat-card:nth-child(n+9), .achievement-badge:nth-child(n+9), .stat-tile:nth-child(n+9), .mini-stat:nth-child(n+9), .history-item:nth-child(n+9) { animation-delay: 320ms; }
+
+/* Nav: active tab icon pops when it becomes active. */
+.nav-btn--active .nav-btn__icon {
+  animation: navPop 300ms var(--ease-out-back) both;
+}
+
+/* Quest check: diamond bursts in on completion. */
+.quest-check--done {
+  animation: checkBurst 320ms var(--ease-out-back) both;
 }
 
 /* ---------- Utility animation classes ---------- */

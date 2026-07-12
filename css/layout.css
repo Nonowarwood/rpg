@@ -53,7 +53,7 @@
 }
 .screen--active {
   display: block;
-  animation: fadeIn var(--dur-base) var(--ease-standard) both;
+  animation: screenIn 340ms var(--ease-out-expo) both;
 }
 
 /* ---------- Top bar (home) ---------- */
@@ -74,7 +74,7 @@
 .topbar__name {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 21px;
+  font-size: 16px;
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
@@ -89,7 +89,7 @@
 .screen-header__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 28px;
+  font-size: 21px;
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
@@ -162,18 +162,43 @@
 }
 .nav-btn:active { transform: scale(0.9); }
 
+/* ---------- Nav position preference (body[data-nav="top"]) ----------
+   Set from state.settings.navPosition by applyNavPosition() — the JS
+   only stamps the attribute; every positional difference lives here. */
+body[data-nav="top"] .bottom-nav {
+  top: 0;
+  bottom: auto;
+  height: calc(var(--nav-height) + var(--safe-top));
+  padding-top: var(--safe-top);
+  padding-bottom: 0;
+  border-top: none;
+  border-bottom: 2px solid var(--border-glass-strong);
+}
+body[data-nav="top"] .bottom-nav__indicator {
+  top: auto;
+  bottom: 0;
+}
+body[data-nav="top"] .screens {
+  padding-top: calc(var(--nav-height) + var(--safe-top) + var(--sp-4));
+  padding-bottom: calc(var(--safe-bottom) + var(--sp-7));
+}
+body[data-nav="top"] .notification-stack {
+  top: calc(var(--nav-height) + var(--safe-top) + var(--sp-3));
+}
+
 /* ==========================================================
    RESPONSIVE — Desktop / tablet enhancements
    ========================================================== */
 
-/* Tablet: still one scrolling column with the bottom nav, just
-   roomier. The real "fill the screen" layout kicks in at 1024px. */
+/* Tablet: still one scrolling column, just roomier. The real
+   "fill the screen" layout kicks in at 1024px. */
 @media (min-width: 720px) {
   .app { max-width: 720px; }
   .bg-fx, .bottom-nav { max-width: 720px; }
 
   .screens {
-    padding: calc(var(--safe-top) + var(--sp-7)) var(--sp-7) calc(var(--nav-height) + var(--sp-8));
+    padding-left: var(--sp-7);
+    padding-right: var(--sp-7);
   }
 
   .stat-tiles {
@@ -188,8 +213,8 @@
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .player-card__name { font-size: 28px; }
-  .levelup-content__level { font-size: 120px; }
+  .player-card__name { font-size: 23px; }
+  .levelup-content__level { font-size: 92px; }
 
   .card-tilt:hover {
     transform: translateY(-3px);
@@ -211,50 +236,53 @@
   }
 }
 
-/* Desktop: the app shell (background glow + nav) goes full-bleed
-   instead of floating a mobile-width column in dead black space.
-   Bottom nav becomes a fixed left sidebar; content spreads into
-   multi-column grids up to a comfortable reading max-width. */
+/* Desktop: full-bleed shell, nav stays a horizontal band (top or
+   bottom per user preference) centered to the content width, and
+   each screen spreads into a real multi-column grid — no more
+   mobile column floating in dead space. */
 @media (min-width: 1024px) {
   .app { max-width: none; }
   .bg-fx { max-width: none; }
 
   .bottom-nav {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: auto;
-    max-width: none;
-    width: var(--sidebar-width);
-    height: 100%;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--sp-7);
-    padding-bottom: 0;
-    border-top: none;
+    max-width: var(--content-max-width);
+    border-left: 2px solid var(--border-glass-strong);
     border-right: 2px solid var(--border-glass-strong);
   }
-  .bottom-nav__indicator { display: none; }
-  .nav-btn { flex: none; height: auto; padding: var(--sp-3) 0; }
 
   .screens {
     max-width: var(--content-max-width);
-    margin-left: var(--sidebar-width);
-    padding: calc(var(--safe-top) + var(--sp-8)) var(--sp-8) var(--sp-8);
+    margin: 0 auto;
+    padding-left: var(--sp-8);
+    padding-right: var(--sp-8);
   }
 
-  .quest-list, .quest-preview-list {
+  .quest-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--sp-3);
     align-content: start;
   }
-  .quest-list .quest-card,
-  .quest-preview-list .quest-card {
+  .quest-list .quest-card {
     margin-bottom: 0;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3);
   }
 
   .achievement-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1440px) {
+  .quest-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .achievement-grid {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
