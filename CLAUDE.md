@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-**Ascend** — a gamified "life RPG" web app (quests, XP, levels, RPG stats, achievements, streaks). Premium dark UI inspired by Persona 5 / Persona 3 Reload / Metaphor: ReFantazio / Honkai Star Rail — glassmorphism, tilted cards, glow, heavy animation. Mobile-first, works fine on desktop.
+**Ascend** — a gamified "life RPG" web app (quests, XP, levels, RPG stats, achievements, streaks). Art direction is a deliberate Persona 5 pastiche ("Heist"): saturated red on true black, diagonal `clip-path` cuts on hero elements, condensed all-caps display type, diamond checkmarks, ribbon banners for big moments — not a generic glassmorphism dashboard. Mobile-first, works fine on desktop.
 
 Vanilla HTML/CSS/JS only. No framework, no bundler, no package.json, no build step.
 
@@ -92,3 +92,11 @@ match /users/{userId} {
 - All UI copy is in French.
 - CSS is split by concern (`variables.css` = design tokens only, `base.css` = reset, `animations.css` = keyframes, `components.css` = reusable components, `layout.css` = app shell/nav/responsive, `screens.css` = screen-specific overrides) — put new styles in the matching file rather than wherever's convenient.
 - Category/difficulty color accents flow through CSS custom properties set inline per element (`--card-accent`, `--pill-accent`) and consumed via `var(--x, fallback)` in `components.css`, not hardcoded per-category classes.
+
+### Design system ("Heist")
+
+- **One dominant accent, two functional ones.** `--accent-red` carries the brand; `--accent-yellow` means reward/done/unlocked; `--accent-cyan` is a single restrained "system tag" color. Category colors (`config.js`) are deliberately kept out of red/yellow — those two hues are reserved for brand and reward, not available for a 7th quest category.
+- **Sharp by default, diagonal on purpose.** `--radius-*` tokens are all `0` — corners are square unless a component explicitly opts into a `clip-path` diagonal cut. Cuts are reserved for hero elements (`.player-card`, `.btn-primary`, `.avatar-ring__circle`, achievement/level-up overlays, the `.quest-card` category tag, `.quest-check`) — most tiles (stat tiles, mini-stats, history rows, chips) stay plain bordered rectangles. Don't add a clip-path to every component; that's what made the first ("gold terminal") direction feel busier without being distinctive — the current look works because the cuts are rare enough to read as intentional.
+- **Glow is spent once.** `--glow-gold` (used on unlocked achievements and the level-up moment) is the only soft blurred glow left in the system — `--glow-blue`/`--glow-violet`/`--glow-success` all resolve to `none`. Emphasis elsewhere comes from a thick (2px+) border or a solid fill, not a blur.
+- **Two type families, one job each.** `--font-display` (Anton, weight 400 only — never request another weight, it'll synthesize a fake bold) is for anything that should shout: headings, the player name, level numbers, section-head titles. `--font-body` (Manrope) is for everything read at length or interacted with (buttons, labels, quest names) — bold/800 + uppercase + letter-spacing does the "graphic" work there instead of switching fonts.
+- Icons (`js/ui/icons.js`) render with `stroke-linecap="square"`/`stroke-linejoin="miter"`, not rounded — matches the sharp-cut language. Don't revert to rounded caps for "softness"; that's the previous direction.

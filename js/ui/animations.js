@@ -28,7 +28,7 @@ export function setBarWidth(el, percent) {
 export function spawnParticles(container, count = 26) {
   if (!container) return;
   container.innerHTML = "";
-  const colors = ["#FFC94C", "#4C8DFF", "#B463FF", "#2BD9E6"];
+  const colors = ["#F6C445", "#E0102E", "#F3F0E6", "#FBDB8C"];
 
   for (let i = 0; i < count; i++) {
     const p = document.createElement("div");

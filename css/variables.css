@@ -1,62 +1,84 @@
 /* ==========================================================
    ASCEND — DESIGN TOKENS
-   Single source of truth for color, spacing, radius, typography.
-   Change values here to re-skin the entire app.
+   "Heist" direction: saturated red on true black, diagonal cuts,
+   condensed display type. Single source of truth — change values
+   here to re-skin the entire app.
    ========================================================== */
 
 :root {
   /* ---------- Surfaces ---------- */
-  --bg-void: #0B0B0F;
-  --bg-void-alt: #08080B;
-  --bg-surface: #131318;
-  --bg-surface-2: #1B1B22;
-  --bg-surface-3: #24242D;
-  --bg-glass: rgba(255, 255, 255, 0.045);
-  --bg-glass-strong: rgba(255, 255, 255, 0.08);
-  --border-glass: rgba(255, 255, 255, 0.09);
-  --border-glass-strong: rgba(255, 255, 255, 0.16);
+  --bg-void: #0B0B0C;
+  --bg-void-alt: #060606;
+  --bg-surface: #161616;
+  --bg-surface-2: #1D1D1E;
+  --bg-surface-3: #262626;
+  --bg-glass: rgba(243, 240, 230, 0.04);
+  --bg-glass-strong: rgba(243, 240, 230, 0.08);
+  --border-glass: rgba(243, 240, 230, 0.16);
+  --border-glass-strong: rgba(243, 240, 230, 0.32);
 
   /* ---------- Text ---------- */
-  --text-primary: #F5F5F8;
-  --text-secondary: #9C9CAE;
-  --text-tertiary: #64646F;
+  --text-primary: #F3F0E6;
+  --text-secondary: #B6B2A8;
+  --text-tertiary: #726C60;
 
-  /* ---------- Accents ---------- */
-  --accent-blue: #4C8DFF;
-  --accent-blue-soft: #7FB0FF;
-  --accent-cyan: #2BD9E6;
-  --accent-violet: #B463FF;
-  --accent-violet-soft: #C98BFF;
-  --accent-gold: #FFC94C;
-  --accent-gold-soft: #FFDD8C;
-  --accent-danger: #FF5A6A;
-  --accent-success: #34E0A1;
+  /* ---------- Accents ----------
+     One dominant color (red) plus two small functional accents
+     (yellow for reward/done, cyan for a single system tag) — not
+     a rainbow of competing hues. Category colors stay saturated
+     (they're identity tags, like the persona-list rows) but are
+     never used as full-surface tints. */
+  --accent-red: #E0102E;
+  --accent-red-dark: #9C0A1F;
+  --accent-red-soft: #FF4A63;
+  --accent-yellow: #F6C445;
+  --accent-yellow-soft: #FBDB8C;
+  --accent-cyan: #2FB8C4;
+  --accent-cyan-soft: #7DD6DE;
+  --accent-violet: #C77DD1;
+  --accent-violet-soft: #DBA6E2;
+  --accent-danger: #E0102E;
+  --accent-success: #5AC490;
+
+  /* Legacy names kept so components.css doesn't need every call
+     site renamed — both now resolve into the red/black system. */
+  --accent-blue: var(--accent-cyan);
+  --accent-blue-soft: var(--accent-cyan-soft);
+  --accent-gold: var(--accent-yellow);
+  --accent-gold-soft: var(--accent-yellow-soft);
 
   /* ---------- Gradients ---------- */
-  --gradient-primary: linear-gradient(135deg, #4C8DFF 0%, #B463FF 100%);
-  --gradient-gold: linear-gradient(135deg, #FFDD8C 0%, #FFC94C 45%, #FF9F4C 100%);
-  --gradient-xp: linear-gradient(90deg, #2BD9E6 0%, #4C8DFF 55%, #B463FF 100%);
-  --gradient-card: linear-gradient(160deg, rgba(76,141,255,0.14) 0%, rgba(180,99,255,0.08) 55%, rgba(255,255,255,0.02) 100%);
-  --gradient-void: radial-gradient(120% 120% at 50% -10%, #17171F 0%, #0B0B0F 55%);
+  --gradient-primary: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-red-dark) 100%);
+  --gradient-gold: linear-gradient(135deg, var(--accent-yellow-soft) 0%, var(--accent-yellow) 100%);
+  --gradient-xp: linear-gradient(90deg, var(--accent-red-dark) 0%, var(--accent-red) 100%);
+  --gradient-card: none;
+  --gradient-void: radial-gradient(140% 90% at 15% -10%, rgba(224,16,46,0.09) 0%, transparent 55%);
 
-  /* ---------- Radius ---------- */
-  --radius-xl: 32px;
-  --radius-lg: 26px;
-  --radius-md: 18px;
-  --radius-sm: 13px;
-  --radius-pill: 999px;
+  /* ---------- Radius ----------
+     Sharp by default. The identity comes from clip-path diagonal
+     cuts on a handful of hero elements (player card, banners,
+     buttons) declared directly in components.css — not from
+     rounding every corner. */
+  --radius-xl: 0px;
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+  --radius-pill: 0px;
 
-  /* ---------- Shadows / Glow ---------- */
-  --shadow-elevated: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
-  --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.5);
-  --glow-blue: 0 0 1px rgba(76,141,255,0.6), 0 0 40px rgba(76,141,255,0.28);
-  --glow-violet: 0 0 1px rgba(180,99,255,0.6), 0 0 40px rgba(180,99,255,0.28);
-  --glow-gold: 0 0 1px rgba(255,201,76,0.7), 0 0 36px rgba(255,201,76,0.35);
-  --glow-success: 0 0 1px rgba(52,224,161,0.6), 0 0 30px rgba(52,224,161,0.3);
+  /* ---------- Shadows / Glow ----------
+     Soft blurred glow is spent in exactly one place (achievement/
+     reward gold) rather than under every button and badge. */
+  --shadow-elevated: 0 26px 60px -14px rgba(0, 0, 0, 0.75);
+  --shadow-card: 0 12px 28px -10px rgba(0, 0, 0, 0.6);
+  --glow-blue: none;
+  --glow-violet: none;
+  --glow-gold: 0 0 26px rgba(246, 196, 69, 0.4);
+  --glow-success: none;
+  --glow-red: 0 0 22px rgba(224, 16, 46, 0.35);
 
   /* ---------- Typography ---------- */
-  --font-display: 'Space Grotesk', 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* ---------- Spacing scale ---------- */
   --sp-1: 4px;

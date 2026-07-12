@@ -28,15 +28,16 @@
   filter: blur(70px);
   opacity: 0.5;
 }
-.bg-glow--blue { width: 320px; height: 320px; top: -80px; left: -100px; background: var(--accent-blue); }
-.bg-glow--violet { width: 300px; height: 300px; top: 30%; right: -120px; background: var(--accent-violet); opacity: 0.35; }
-.bg-glow--cyan { width: 260px; height: 260px; bottom: 10%; left: -80px; background: var(--accent-cyan); opacity: 0.25; }
+/* One glow, spent deliberately — not a wash of competing colors. */
+.bg-glow--blue { width: 360px; height: 360px; top: -100px; left: -120px; background: var(--accent-red); opacity: 0.16; }
+.bg-glow--violet { display: none; }
+.bg-glow--cyan { display: none; }
 .bg-grain {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 3px 3px;
-  opacity: 0.4;
+  background-image: radial-gradient(rgba(243,240,230,0.05) 1px, transparent 1px);
+  background-size: 6px 6px;
+  opacity: 0.5;
 }
 
 /* ---------- Screens container ---------- */
@@ -64,14 +65,18 @@
 }
 .topbar__greeting { display: flex; flex-direction: column; }
 .topbar__eyebrow {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-tertiary);
-  font-weight: 600;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 .topbar__name {
   font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 700;
+  font-weight: 400;
+  font-size: 21px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
 /* ---------- Generic screen header (Quests/Stats/Achievements/Profile) ---------- */
@@ -82,13 +87,18 @@
   margin-bottom: var(--sp-5);
 }
 .screen-header__title {
-  font-size: 24px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 .screen-header__meta {
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--accent-gold);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent-yellow);
 }
 
 /* ---------- Quest preview list (home) ---------- */
@@ -108,21 +118,19 @@
   padding-bottom: var(--safe-bottom);
   display: flex;
   align-items: center;
-  background: rgba(15,15,20,0.75);
+  background: rgba(11,11,12,0.85);
   backdrop-filter: blur(22px) saturate(160%);
   -webkit-backdrop-filter: blur(22px) saturate(160%);
-  border-top: 1px solid var(--border-glass);
+  border-top: 2px solid var(--border-glass-strong);
   z-index: 200;
 }
 .bottom-nav__indicator {
   position: absolute;
-  top: 8px;
+  top: 0;
   left: 0;
   width: 20%;
   height: 3px;
-  border-radius: var(--radius-pill);
-  background: var(--gradient-primary);
-  box-shadow: var(--glow-blue);
+  background: var(--accent-red);
   transition: transform var(--dur-base) var(--ease-out-expo);
 }
 .nav-btn {
@@ -132,7 +140,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 5px;
   color: var(--text-tertiary);
   transition: color var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-out-back);
 }
@@ -141,11 +149,13 @@
   transition: transform var(--dur-base) var(--ease-out-back);
 }
 .nav-btn__label {
-  font-size: 10.5px;
-  font-weight: 600;
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 .nav-btn--active {
-  color: var(--text-primary);
+  color: var(--accent-red-soft);
 }
 .nav-btn--active .nav-btn__icon {
   transform: translateY(-2px) scale(1.12);
@@ -178,24 +188,25 @@
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .player-card__name { font-size: 24px; }
+  .player-card__name { font-size: 28px; }
   .levelup-content__level { font-size: 120px; }
 
   .card-tilt:hover {
-    transform: perspective(900px) rotateX(3deg) rotateY(-3deg) translateY(-4px);
+    transform: translateY(-3px);
     box-shadow: var(--shadow-elevated);
+    border-color: var(--border-glass-strong);
   }
 
   .quest-card:hover {
     transform: translateX(4px);
+    border-color: var(--card-accent, var(--border-glass-strong));
   }
 
   .overlay--modal {
     align-items: center;
   }
   .modal-sheet {
-    border-radius: var(--radius-xl);
-    border-bottom: 1px solid var(--border-glass-strong);
+    border-bottom: 2px solid var(--border-glass-strong);
     max-height: 80vh;
   }
 }
@@ -221,7 +232,7 @@
     gap: var(--sp-7);
     padding-bottom: 0;
     border-top: none;
-    border-right: 1px solid var(--border-glass);
+    border-right: 2px solid var(--border-glass-strong);
   }
   .bottom-nav__indicator { display: none; }
   .nav-btn { flex: none; height: auto; padding: var(--sp-3) 0; }

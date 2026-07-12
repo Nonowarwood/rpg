@@ -44,21 +44,21 @@ export function titleForLevel(level) {
 // ---------- Quest categories ----------
 // `icon` is a key into js/ui/icons.js, not a raw glyph.
 export const CATEGORIES = {
-  etudes:      { name: "Études",      icon: "book",      color: "#4C8DFF", stats: ["intelligence", "knowledge"] },
-  sport:       { name: "Sport",       icon: "dumbbell",  color: "#FF5A6A", stats: ["strength", "health"] },
-  sante:       { name: "Santé",       icon: "heart",     color: "#34E0A1", stats: ["health"] },
-  creativite:  { name: "Créativité",  icon: "palette",   color: "#B463FF", stats: ["creativity"] },
-  maison:      { name: "Maison",      icon: "home",      color: "#FFC94C", stats: ["discipline"] },
-  travail:     { name: "Travail",     icon: "briefcase", color: "#2BD9E6", stats: ["wealth", "discipline"] },
-  personnel:   { name: "Personnel",   icon: "sparkle",   color: "#FF7CD8", stats: ["social", "creativity"] },
+  etudes:      { name: "Études",      icon: "book",      color: "#2FB8C4", stats: ["intelligence", "knowledge"] },
+  sport:       { name: "Sport",       icon: "dumbbell",  color: "#E8823C", stats: ["strength", "health"] },
+  sante:       { name: "Santé",       icon: "heart",     color: "#5AC490", stats: ["health"] },
+  creativite:  { name: "Créativité",  icon: "palette",   color: "#C77DD1", stats: ["creativity"] },
+  maison:      { name: "Maison",      icon: "home",      color: "#C99A4A", stats: ["discipline"] },
+  travail:     { name: "Travail",     icon: "briefcase", color: "#5C8DD6", stats: ["wealth", "discipline"] },
+  personnel:   { name: "Personnel",   icon: "sparkle",   color: "#E0669C", stats: ["social", "creativity"] },
 };
 
 // ---------- Quest difficulties ----------
 export const DIFFICULTIES = {
-  easy:   { name: "Facile",    xp: 15,  color: "#34E0A1" },
-  medium: { name: "Moyenne",   xp: 30,  color: "#FFC94C" },
-  hard:   { name: "Difficile", xp: 55,  color: "#FF5A6A" },
-  epic:   { name: "Épique",    xp: 90,  color: "#B463FF" },
+  easy:   { name: "Facile",    xp: 15,  color: "#5AC490" },
+  medium: { name: "Moyenne",   xp: 30,  color: "#5C8DD6" },
+  hard:   { name: "Difficile", xp: 55,  color: "#E8823C" },
+  epic:   { name: "Épique",    xp: 90,  color: "#C77DD1" },
 };
 
 // ---------- RPG attributes ----------

@@ -39,7 +39,7 @@ const PATHS = {
 
 export function icon(name, { size = 20, className = "" } = {}) {
   const inner = PATHS[name] || PATHS.sparkle;
-  return `<svg class="icon${className ? " " + className : ""}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+  return `<svg class="icon${className ? " " + className : ""}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">${inner}</svg>`;
 }
 
 // Fills every static [data-icon] placeholder in `root` once — used for
