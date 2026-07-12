@@ -15,6 +15,9 @@ let currentScreen = null;
 
 export function goToScreen(name) {
   if (name === currentScreen) return;
+  // Never blank the app on a bogus name — only navigate to screens
+  // that actually exist.
+  if (!document.querySelector(`.screen[data-screen="${name}"]`)) return;
   const isBootCall = currentScreen === null;
   currentScreen = name;
   // No sound on the initial boot render — creating an AudioContext
@@ -32,10 +35,13 @@ export function goToScreen(name) {
   emit("screen:changed", name);
 }
 
-// Flips the nav bar between bottom (default) and top — all the
-// actual repositioning lives in CSS keyed off body[data-nav].
+// Flips the nav bar between bottom (default) and top — all the actual
+// repositioning lives in CSS keyed off body[data-nav-position].
+// NOTE: the attribute is deliberately NOT `data-nav` — that attribute
+// is the app-wide "navigate on click" trigger, and stamping it on
+// <body> would turn every stray click into a navigation.
 export function applyNavPosition(position) {
-  document.body.dataset.nav = position === "top" ? "top" : "bottom";
+  document.body.dataset.navPosition = position === "top" ? "top" : "bottom";
 }
 
 export function initNavigation() {

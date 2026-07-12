@@ -162,10 +162,10 @@
 }
 .nav-btn:active { transform: scale(0.9); }
 
-/* ---------- Nav position preference (body[data-nav="top"]) ----------
+/* ---------- Nav position preference (body[data-nav-position="top"]) ----------
    Set from state.settings.navPosition by applyNavPosition() — the JS
    only stamps the attribute; every positional difference lives here. */
-body[data-nav="top"] .bottom-nav {
+body[data-nav-position="top"] .bottom-nav {
   top: 0;
   bottom: auto;
   height: calc(var(--nav-height) + var(--safe-top));
@@ -174,15 +174,15 @@ body[data-nav="top"] .bottom-nav {
   border-top: none;
   border-bottom: 2px solid var(--border-glass-strong);
 }
-body[data-nav="top"] .bottom-nav__indicator {
+body[data-nav-position="top"] .bottom-nav__indicator {
   top: auto;
   bottom: 0;
 }
-body[data-nav="top"] .screens {
+body[data-nav-position="top"] .screens {
   padding-top: calc(var(--nav-height) + var(--safe-top) + var(--sp-4));
   padding-bottom: calc(var(--safe-bottom) + var(--sp-7));
 }
-body[data-nav="top"] .notification-stack {
+body[data-nav-position="top"] .notification-stack {
   top: calc(var(--nav-height) + var(--safe-top) + var(--sp-3));
 }
 

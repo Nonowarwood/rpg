@@ -104,7 +104,9 @@ match /users/{userId} {
 
 ### Nav position preference
 
-The tab bar sits at the bottom by default and can be moved to the top from the profile's Préférences section. The preference lives in `state.settings.navPosition` (`"bottom" | "top"`); `applyNavPosition()` in `js/ui/navigation.js` just stamps `body[data-nav=…]`, and **all** positional CSS differences live in `layout.css` under `body[data-nav="top"]` selectors (bar placement, indicator edge, `.screens` padding, toast stack offset). It's applied at boot, on preference click, and after cloud hydration (a cloud save can carry a different preference). If you add any new fixed-position chrome, give it a `body[data-nav="top"]` variant too.
+The tab bar sits at the bottom by default and can be moved to the top from the profile's Préférences section. The preference lives in `state.settings.navPosition` (`"bottom" | "top"`); `applyNavPosition()` in `js/ui/navigation.js` just stamps `body[data-nav-position=…]`, and **all** positional CSS differences live in `layout.css` under `body[data-nav-position="top"]` selectors (bar placement, indicator edge, `.screens` padding, toast stack offset). It's applied at boot, on preference click, and after cloud hydration (a cloud save can carry a different preference). If you add any new fixed-position chrome, give it a `body[data-nav-position="top"]` variant too.
+
+**Attribute trap:** `data-nav` on an element means "clicking this navigates to that screen" — `initNavigation()` binds a click handler to *every* `[data-nav]` element. Never put a `data-nav` attribute on anything that isn't a navigation trigger (this once shipped as a bug: the body position flag was named `data-nav`, so every click anywhere bubbled to `<body>` and navigated to a nonexistent screen, blanking the app). `goToScreen()` now also refuses names that don't match a real `.screen[data-screen]` as a backstop.
 
 ### Desktop layout (≥1024px)
 
