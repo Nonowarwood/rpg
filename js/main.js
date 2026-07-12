@@ -57,6 +57,36 @@ on("stat:levelup", ({ statKey, level }) => {
   showToast({ type: "stat", icon: def.icon, title: `${def.name} · Niveau ${level}`, desc: "Statistique améliorée" });
 });
 
+// ---------- Cross-system feedback: Google account sync ----------
+on("auth:changed", (user) => {
+  if (user) {
+    showToast({ type: "achievement", title: "Connecté avec Google", desc: user.displayName || user.email });
+  } else {
+    showToast({ type: "xp", title: "Déconnecté", desc: "Progression conservée en local" });
+  }
+  refreshAll();
+});
+
+on("state:hydrated", () => {
+  showToast({ type: "achievement", title: "Progression synchronisée", desc: "Récupérée depuis le cloud" });
+  refreshAll();
+});
+
+on("auth:error", () => {
+  showToast({ type: "error", title: "Connexion Google indisponible", desc: "Vérifie ta connexion internet" });
+});
+
+// ---------- Optional cloud layer (Google sign-in + Firestore) ----------
+// Dynamically imported (not a static top-level import) so a network/CDN
+// failure only disables cloud sync — it can't take down the rest of the
+// app's module graph, which is otherwise fully local/offline-capable.
+import("./systems/authSystem.js").catch((err) => {
+  console.warn("[Ascend] Google sign-in unavailable (offline or CDN blocked).", err);
+});
+import("./systems/cloudSync.js").catch((err) => {
+  console.warn("[Ascend] Cloud sync unavailable (offline or CDN blocked).", err);
+});
+
 // ---------- Passive focus-time tracking ----------
 // Ticks once a minute while the tab is visible; feeds both the
 // "Temps focus" home tile and the "Temps d'utilisation" profile stat.

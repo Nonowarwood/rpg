@@ -15,6 +15,8 @@ export function createDefaultState() {
   return {
     profile: {
       name: "Joueur",
+      photoURL: null,
+      email: null,
       createdAt: Date.now(),
     },
     level: 1,

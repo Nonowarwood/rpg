@@ -54,6 +54,20 @@ export function persistNow() {
   emit("state:changed", state);
 }
 
+// Replaces the live `state` singleton's contents in place with data
+// pulled from Firestore (see systems/cloudSync.js). `state` is a
+// const binding shared across every module, so this mutates it
+// rather than reassigning — merged through the same defaults path
+// as a local save, so a cloud doc from an older app version is safe.
+export function hydrateFromCloud(cloudData) {
+  const merged = mergeWithDefaults(cloudData);
+  Object.keys(state).forEach((key) => delete state[key]);
+  Object.assign(state, merged);
+  persistSaveNow(state);
+  emit("state:changed", state);
+  emit("state:hydrated", state);
+}
+
 window.addEventListener("beforeunload", () => {
   persistSaveNow(state);
 });

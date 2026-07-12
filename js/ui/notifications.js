@@ -20,6 +20,7 @@ const TYPE_ICON = {
   title: "crown",
   streak: "flame",
   stat: "chart",
+  error: "alert",
 };
 
 export function showToast({ type = "xp", title, desc = "", sound = "notification", icon: iconOverride } = {}) {

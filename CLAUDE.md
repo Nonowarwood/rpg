@@ -27,7 +27,7 @@ Strict layered dependency direction, all wired through plain ES module imports (
 main.js  (bootstrap: wires eventBus events -> UI feedback, initial render)
   -> ui/*         (renders DOM from state; owns all document.getElementById/querySelector calls)
     -> systems/*  (game logic: mutates state, emits events, never touches DOM)
-      -> core/*   (state singleton, event bus, storage, config, date helpers)
+      -> core/*   (state singleton, event bus, storage, config, date helpers, Firebase SDK init)
       -> data/*   (default save shape, starter quests, achievement catalogue)
 ```
 
@@ -35,7 +35,9 @@ main.js  (bootstrap: wires eventBus events -> UI feedback, initial render)
 
 ### State
 
-`js/core/state.js` exports one mutable singleton object, `state`, hydrated from `localStorage` on load (merged with `createDefaultState()` from `js/data/defaultData.js` so old saves gain new fields safely). Systems mutate `state` directly, then call `persist()` (debounced write + emits `state:changed`, which nothing currently subscribes to — screens are refreshed explicitly, not reactively).
+`js/core/state.js` exports one mutable singleton object, `state`, hydrated from `localStorage` on load (merged with `createDefaultState()` from `js/data/defaultData.js` so old saves gain new fields safely). Systems mutate `state` directly, then call `persist()` (debounced write + emits `state:changed`; `js/systems/cloudSync.js` is the one subscriber — screens themselves are still refreshed explicitly via `refreshAll()`, not reactively).
+
+`state` is a `const` binding shared by every module that imports it, so nothing may ever reassign it. Cloud hydration (`hydrateFromCloud()`) mutates it in place — deletes every key, then `Object.assign`s the merged replacement — specifically so the same object reference stays valid everywhere.
 
 Game balance (XP curve, categories, difficulties, titles, stat list) lives entirely in `js/core/config.js` — that's the one file to edit to rebalance the game.
 
@@ -62,6 +64,28 @@ Level-up and achievement-unlock are both full-screen overlays (`js/ui/modals.js`
 ### Sound
 
 `js/systems/soundSystem.js` looks for files in `assets/sounds/{click,complete,achievement,levelup,notification}.mp3` and fails silently if they're missing — no sound assets are checked in yet (see `assets/sounds/README.txt`).
+
+### Icons
+
+`js/ui/icons.js` is the only source of icon markup — a hand-authored set of inline-SVG line icons keyed by name (`icon("flame", { size: 18 })`). There are no emoji anywhere in the app; `config.js`/`defaultData.js` store an icon *key* (e.g. `"book"`) on categories/stats/achievements, never a glyph. Markup that's static in `index.html` (nav bar, home stat tiles) instead uses `<span data-icon="flame" data-icon-size="18">`, filled once at boot by `hydrateStaticIcons()`. Add new icons to `icons.js`'s `PATHS` map, never inline an emoji or a one-off `<svg>` in a screen module.
+
+### Google sign-in + Firestore cloud sync
+
+Firebase (Auth + Firestore) is loaded straight from Google's CDN as ES modules in `js/core/firebase.js` (`https://www.gstatic.com/firebasejs/<version>/firebase-*.js`) — no npm/bundler involved, so this doesn't violate the no-build-step constraint. `js/systems/authSystem.js` wraps `onAuthStateChanged`/`signInWithPopup`/`signOut` and emits `auth:changed` on the event bus; `js/systems/cloudSync.js` is the only subscriber to both `auth:changed` and `state:changed`.
+
+localStorage stays the source of truth for offline/guest play — Firestore is a best-effort mirror on top, not a replacement:
+- **Sign-in with no existing cloud doc**: current local state (including guest progress made before signing in) is pushed to `users/{uid}` as the first save.
+- **Sign-in with an existing cloud doc**: cloud data **replaces** local state via `hydrateFromCloud()` (cloud is authoritative once it exists — no merge UI). This emits `state:hydrated`, which `main.js` uses to force a `refreshAll()`.
+- **Every subsequent local change**: debounced (1s) push to Firestore while signed in. There is no realtime listener/multi-tab sync — a second device only sees updates the next time it signs in there. Don't add `onSnapshot` without also guarding against the write-back feedback loop (a pulled snapshot would otherwise immediately re-trigger `state:changed` → push).
+
+The player's avatar (`js/ui/avatar.js`) renders `state.profile.photoURL` (set from the Google account on sign-in) when present, falling back to a colored initial otherwise — this is the only place avatar rendering logic lives; `homeScreen.js` and `profileScreen.js` both call into it rather than duplicating the `<img>`-vs-initial branch.
+
+**Setup required outside this repo**: a Firebase project with Google sign-in enabled (Authentication → Sign-in method), a Firestore database, `nonowarwood.github.io` (and any other deploy domain) added under Authentication → Settings → Authorized domains, and Firestore security rules restricting each `users/{uid}` doc to its own owner:
+```
+match /users/{userId} {
+  allow read, write: if request.auth != null && request.auth.uid == userId;
+}
+```
 
 ## Conventions
 

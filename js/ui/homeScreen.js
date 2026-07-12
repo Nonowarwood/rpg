@@ -10,6 +10,7 @@ import { currentTitle } from "../systems/titleSystem.js";
 import { isQuestCompletedToday } from "../systems/questSystem.js";
 import { questCardHTML, wireQuestCompletionHandlers } from "./questsScreen.js";
 import { setBarWidth, animateCounter } from "./animations.js";
+import { avatarInnerHTML } from "./avatar.js";
 
 const previewEl = document.getElementById("home-quest-preview");
 
@@ -20,10 +21,6 @@ function animateTile(el, value) {
     return;
   }
   animateCounter(el, from, value, { duration: 650 });
-}
-
-function initials(name) {
-  return (name || "?").trim().charAt(0).toUpperCase() || "?";
 }
 
 function formatMinutes(min) {
@@ -40,14 +37,12 @@ function greetingForNow() {
 }
 
 export function renderHome() {
-  const initial = initials(state.profile.name);
-
   document.getElementById("home-greeting").textContent = greetingForNow();
   document.getElementById("home-username").textContent = state.profile.name;
   document.getElementById("home-player-name").textContent = state.profile.name;
   document.getElementById("home-player-title").textContent = currentTitle();
-  document.getElementById("home-avatar").textContent = initial;
-  document.getElementById("quick-avatar-glyph").textContent = initial;
+  document.getElementById("home-avatar").innerHTML = avatarInnerHTML();
+  document.getElementById("quick-avatar-glyph").innerHTML = avatarInnerHTML();
   document.getElementById("home-level-badge").textContent = state.level;
   document.getElementById("home-level-num").textContent = state.level;
 

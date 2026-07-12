@@ -34,6 +34,7 @@ const PATHS = {
   crown: '<path d="M4 18h16l1-9-4.5 3L12 6l-4.5 6L3 9l1 9z"/><line x1="4" y1="21" x2="20" y2="21"/>',
   plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
   check: '<path d="M5 13l4 4L19 7"/>',
+  alert: '<circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>',
 };
 
 export function icon(name, { size = 20, className = "" } = {}) {
