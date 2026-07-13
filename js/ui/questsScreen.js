@@ -6,7 +6,7 @@
 
 import { state } from "../core/state.js";
 import { CATEGORIES, DIFFICULTIES } from "../core/config.js";
-import { completeQuest, deleteQuest, isQuestCompletedToday } from "../systems/questSystem.js";
+import { completeQuest, deleteQuest, isQuestCompletedToday, questTierInfo } from "../systems/questSystem.js";
 import { spawnXpPopup } from "./animations.js";
 import { playSound } from "../systems/soundSystem.js";
 import { icon } from "./icons.js";
@@ -18,18 +18,37 @@ const categoryFiltersEl = document.getElementById("category-filters");
 
 export function questCardHTML(quest) {
   const cat = CATEGORIES[quest.category];
-  const diff = DIFFICULTIES[quest.difficulty];
   const done = isQuestCompletedToday(quest);
+  const tier = questTierInfo(quest);
+
+  let metaHTML;
+  if (tier) {
+    const pips = quest.tiers
+      .map((_, i) => `<span class="tier-pip${i < tier.progress ? " tier-pip--done" : ""}"></span>`)
+      .join("");
+    const label = tier.done ? "Terminé" : tier.current.label;
+    const xp = tier.done ? "" : `<span class="quest-card__xp">+${tier.current.xp} XP</span>`;
+    metaHTML = `
+      <span class="quest-card__tag">${cat.name}</span>
+      <span class="quest-card__pips">${pips}</span>
+      <span>${label}</span>
+      ${xp}
+    `;
+  } else {
+    const diff = DIFFICULTIES[quest.difficulty];
+    metaHTML = `
+      <span class="quest-card__tag">${cat.name}</span>
+      <span>${diff.name}</span>
+      <span class="quest-card__xp">+${quest.xp} XP</span>
+    `;
+  }
+
   return `
     <div class="quest-card${done ? " quest-card--done" : ""}" data-quest-id="${quest.id}" style="--card-accent:${cat.color}">
       <div class="quest-card__icon">${icon(cat.icon, { size: 22 })}</div>
       <div class="quest-card__body">
         <div class="quest-card__name">${quest.name}</div>
-        <div class="quest-card__meta">
-          <span class="quest-card__tag">${cat.name}</span>
-          <span class="quest-card__tag">${diff.name}</span>
-          <span class="quest-card__xp">+${quest.xp} XP</span>
-        </div>
+        <div class="quest-card__meta">${metaHTML}</div>
       </div>
       <button class="quest-check${done ? " quest-check--done" : ""}" data-quest-id="${quest.id}" aria-label="Compléter la quête">
         <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -91,9 +110,14 @@ export function wireQuestCompletionHandlers(containerEl) {
 
     playSound("complete");
     if (cardEl) {
-      cardEl.classList.add("quest-card--done");
-      cardEl.querySelector(".quest-check")?.classList.add("quest-check--done");
-      spawnXpPopup(cardEl, result.quest.xp);
+      // A tiered quest only reads as "done" once its last tier is
+      // checked — intermediate tiers just pop the XP and let the
+      // deferred refresh reveal the next grade.
+      if (isQuestCompletedToday(result.quest)) {
+        cardEl.classList.add("quest-card--done");
+        cardEl.querySelector(".quest-check")?.classList.add("quest-check--done");
+      }
+      spawnXpPopup(cardEl, result.xpEarned);
     }
   });
 

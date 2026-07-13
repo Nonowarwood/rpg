@@ -29,8 +29,8 @@ function refreshAll() {
 }
 
 // ---------- Cross-system feedback: quest completion ----------
-on("quest:completed", ({ quest, leveledUp, newAchievements }) => {
-  showToast({ type: "quest", title: "Quête complétée", desc: `+${quest.xp} XP · ${quest.name}` });
+on("quest:completed", ({ quest, xpEarned, leveledUp, newAchievements }) => {
+  showToast({ type: "quest", title: "Quête complétée", desc: `+${xpEarned} XP · ${quest.name}` });
 
   if (leveledUp) showLevelUpOverlay(state.level, currentTitle());
   newAchievements.forEach((a) => queueAchievementOverlay(a));

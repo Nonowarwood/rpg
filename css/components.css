@@ -447,6 +447,23 @@
   color: var(--accent-yellow);
 }
 
+/* Tier pips — one diamond per grade, filled as tiers are checked. */
+.quest-card__pips {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.tier-pip {
+  width: 7px; height: 7px;
+  border: 1.5px solid var(--card-accent, var(--accent-red));
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.tier-pip--done {
+  background: var(--accent-yellow);
+  border-color: var(--accent-yellow);
+}
+
 .quest-check {
   width: 26px; height: 26px;
   margin: auto var(--sp-4) auto 0;

@@ -38,19 +38,52 @@ export function deleteQuest(id) {
   emit("quest:deleted", id);
 }
 
+// Tier info for graded quests (500ml -> 1L -> 1,5L). Tier progress
+// only counts if it was made today — any other day it reads as 0,
+// which is what makes tiered dailies reset each morning without a
+// dedicated rollover pass.
+export function questTierInfo(quest) {
+  if (!quest.tiers) return null;
+  const progress = quest.lastCompletedDate === todayISO() ? (quest.tierProgress || 0) : 0;
+  const done = progress >= quest.tiers.length;
+  return {
+    progress,
+    total: quest.tiers.length,
+    done,
+    current: done ? null : quest.tiers[progress],
+  };
+}
+
 export function isQuestCompletedToday(quest) {
+  if (quest.tiers) return questTierInfo(quest).done;
   return quest.lastCompletedDate === todayISO();
 }
 
-// Returns null if the quest doesn't exist or was already completed today.
+// Completes a simple quest, or the *current tier* of a graded quest.
+// Returns null if the quest doesn't exist or is already fully done today.
 export function completeQuest(id) {
   const quest = state.quests.find((q) => q.id === id);
   if (!quest || isQuestCompletedToday(quest)) return null;
 
-  quest.lastCompletedDate = todayISO();
+  let xpEarned;
+  let historyName = quest.name;
 
-  const { leveledUp } = awardXp(quest.xp);
-  awardCategoryStats(quest.category, quest.xp);
+  if (quest.tiers) {
+    // questTierInfo already treats progress from a previous day as 0,
+    // so writing info.progress + 1 both advances today's tier and
+    // resets stale progress in one assignment.
+    const info = questTierInfo(quest);
+    xpEarned = info.current.xp;
+    historyName = `${quest.name} — ${info.current.label}`;
+    quest.tierProgress = info.progress + 1;
+    quest.lastCompletedDate = todayISO();
+  } else {
+    xpEarned = quest.xp;
+    quest.lastCompletedDate = todayISO();
+  }
+
+  const { leveledUp } = awardXp(xpEarned);
+  awardCategoryStats(quest.category, xpEarned);
   registerCompletionForStreak();
 
   state.counters.totalQuestsCompleted += 1;
@@ -62,9 +95,9 @@ export function completeQuest(id) {
 
   state.history.unshift({
     id: "h_" + Date.now().toString(36),
-    questName: quest.name,
+    questName: historyName,
     category: quest.category,
-    xp: quest.xp,
+    xp: xpEarned,
     date: todayISO(),
     timestamp: Date.now(),
   });
@@ -77,7 +110,7 @@ export function completeQuest(id) {
   const newAchievements = checkAchievements();
 
   persist();
-  emit("quest:completed", { quest, leveledUp, newAchievements });
+  emit("quest:completed", { quest, xpEarned, leveledUp, newAchievements });
 
-  return { quest, leveledUp, newAchievements };
+  return { quest, xpEarned, leveledUp, newAchievements };
 }

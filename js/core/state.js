@@ -6,7 +6,7 @@
 // ============================================================
 
 import { loadSave, persistSave, persistSaveNow } from "./storage.js";
-import { createDefaultState } from "../data/defaultData.js";
+import { createDefaultState, STARTER_QUESTS, LEGACY_STARTER_NAMES, CATALOG_VERSION } from "../data/defaultData.js";
 import { emit } from "./eventBus.js";
 import { todayISO } from "./date.js";
 
@@ -14,7 +14,7 @@ function mergeWithDefaults(saved) {
   const defaults = createDefaultState();
   // Shallow-merge top level, deep-merge known nested objects so that
   // future new fields introduced in updates don't break old saves.
-  return {
+  const merged = {
     ...defaults,
     ...saved,
     profile: { ...defaults.profile, ...saved.profile },
@@ -28,6 +28,23 @@ function mergeWithDefaults(saved) {
     // list (user deleted everything) isn't overwritten by starters.
     quests: Array.isArray(saved.quests) ? saved.quests : defaults.quests,
   };
+
+  // Catalog migration: when the app ships new starter quests, saves
+  // from an older catalog get the missing ones appended (matched by
+  // stable id). The v1 starters (random ids) are dropped by name —
+  // the v2 catalog re-covers them in tiered form.
+  if ((saved.catalogVersion || 0) < CATALOG_VERSION) {
+    merged.quests = merged.quests.filter(
+      (q) => !(LEGACY_STARTER_NAMES.has(q.name) && !String(q.id).startsWith("starter_"))
+    );
+    const have = new Set(merged.quests.map((q) => q.id));
+    STARTER_QUESTS.forEach((q) => {
+      if (!have.has(q.id)) merged.quests.push(structuredClone(q));
+    });
+    merged.catalogVersion = CATALOG_VERSION;
+  }
+
+  return merged;
 }
 
 const saved = loadSave();

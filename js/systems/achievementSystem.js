@@ -8,12 +8,17 @@ import { ACHIEVEMENTS } from "../data/defaultData.js";
 import { emit } from "../core/eventBus.js";
 
 function buildSnapshot() {
+  const statLevels = Object.values(state.stats).map((s) => s.level);
   return {
     totalQuestsCompleted: state.counters.totalQuestsCompleted,
     level: state.level,
     totalXp: state.totalXp,
     streakCurrent: state.streak.current,
+    streakLongest: state.streak.longest,
     categoriesCompleted: state.categoriesCompleted.length,
+    todayQuests: state.counters.todayQuestsCompleted,
+    maxStatLevel: Math.max(...statLevels),
+    minStatLevel: Math.min(...statLevels),
   };
 }
 

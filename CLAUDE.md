@@ -47,9 +47,19 @@ Date/streak logic always goes through `js/core/date.js` (`todayISO`/`yesterdayIS
 
 Systems emit events after mutating state (`quest:completed`, `quest:created`, `quest:deleted`, `streak:updated`, `stat:levelup`, `level:up`, `xp:gained`); `main.js` is the only subscriber and is where all cross-cutting feedback lives (toasts, level-up/achievement overlays, scheduling the deferred `refreshAll()`). UI screen modules do not listen on the bus themselves.
 
+### Quest model: simple vs tiered
+
+Quests come in two shapes. **Simple** quests have `{ difficulty, xp }` — one check per day. **Tiered** quests have `tiers: [{ label, xp }, ...]` instead (e.g. "Boire de l'eau": 500 ml → 1 L → 1,5 L) — each check completes the *current* tier, awards that tier's XP, and counts as one quest completion. `questTierInfo(quest)` is the one place tier progress is interpreted: progress only counts if `lastCompletedDate` is today, so tiered dailies reset each morning with **no rollover pass** — never read `quest.tierProgress` directly, it can be stale from a previous day. User-created quests (quest modal) are always simple; tiered quests come from the starter catalog only.
+
+The starter catalog (`STARTER_QUESTS` in `js/data/defaultData.js`) uses stable `"starter_*"` ids and a `CATALOG_VERSION`. `mergeWithDefaults()` in `core/state.js` appends any missing starter quests to saves with an older `catalogVersion` (and drops the v1 pre-catalog starters by name via `LEGACY_STARTER_NAMES`). To ship new starter quests: add them to `STARTER_QUESTS` **and bump `CATALOG_VERSION`** — without the bump, existing saves never see them.
+
 ### Quest completion pipeline
 
-`js/systems/questSystem.js#completeQuest()` is the central choke point: one call synchronously awards player XP (`xpSystem`), awards the quest's category stats (`statsSystem`), updates the streak (`streakSystem`), updates counters/history, checks achievement unlocks (`achievementSystem`), persists once, then emits a single `quest:completed` event carrying `{ quest, leveledUp, newAchievements }`. Anything that needs to react to a completed quest should hang off that event rather than re-deriving state.
+`js/systems/questSystem.js#completeQuest()` is the central choke point: one call synchronously awards player XP (`xpSystem`), awards the quest's category stats (`statsSystem`), updates the streak (`streakSystem`), updates counters/history, checks achievement unlocks (`achievementSystem`), persists once, then emits a single `quest:completed` event carrying `{ quest, xpEarned, leveledUp, newAchievements }`. Use `xpEarned`, not `quest.xp` — for tiered quests the XP awarded is the tier's, and `quest.xp` doesn't exist. Anything that needs to react to a completed quest should hang off that event rather than re-deriving state.
+
+### Achievements
+
+`ACHIEVEMENTS` (~40 entries, `js/data/defaultData.js`) are pure predicates over the flat snapshot built by `achievementSystem.buildSnapshot()` (`totalQuestsCompleted`, `level`, `totalXp`, `streakCurrent`, `streakLongest`, `categoriesCompleted`, `todayQuests`, `maxStatLevel`, `minStatLevel`). To add an achievement that needs a new metric, extend the snapshot rather than reaching into `state` from a condition.
 
 ### Rendering pattern
 
