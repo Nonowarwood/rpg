@@ -81,11 +81,13 @@ function renderDailyProgress() {
     .classList.toggle("daily-progress--complete", total > 0 && done === total);
 }
 
+// Always renders 10 cards; CSS hides everything past the 5th below
+// 1024px (a media query is more reliable here than JS width checks,
+// and it follows window resizes for free).
 function renderQuestPreview() {
-  const count = window.matchMedia("(min-width: 1024px)").matches ? 8 : 5;
   const preview = [...state.quests]
     .sort((a, b) => Number(isQuestCompletedToday(a)) - Number(isQuestCompletedToday(b)))
-    .slice(0, count);
+    .slice(0, 10);
 
   if (!preview.length) {
     previewEl.innerHTML = `<p class="empty-state">Aucune quête. Ajoutez-en une dans l'onglet Quêtes.</p>`;

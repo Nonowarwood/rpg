@@ -109,6 +109,21 @@
 @keyframes spinSlow {
   to { transform: rotate(1turn); }
 }
+@keyframes spinSlowReverse {
+  to { transform: rotate(-1turn); }
+}
+
+/* Background stripe drift. 110.31px = exactly 6 stripe periods
+   (26px / sqrt(2) per axis) for the 45deg pattern, so the loop
+   restart lands on an identical frame. */
+@keyframes stripesDrift {
+  to { transform: translate(110.31px, -110.31px); }
+}
+
+@keyframes diamondFloat {
+  from { transform: translateY(-14px); }
+  to   { transform: translateY(14px); }
+}
 
 /* ==========================================================
    Applied motion (entrances + stagger)
