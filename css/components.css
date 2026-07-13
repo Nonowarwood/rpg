@@ -339,9 +339,62 @@
   justify-content: center;
 }
 .character-art {
-  width: min(280px, 64vw);
-  height: auto;
+  width: auto;
+  height: min(320px, 58vw);
   animation: figureBreath 4.5s ease-in-out infinite alternate;
+}
+/* Soft glow behind the Mii — opacity driven by player level from
+   statsScreen.js. Content-scoped exception to the "one glow" rule. */
+.character-aura {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  width: 240px;
+  height: 240px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(224, 16, 46, 0.55) 0%, transparent 65%);
+  filter: blur(6px);
+  pointer-events: none;
+  transition: opacity 800ms var(--ease-standard);
+}
+/* Equipment row: one diamond per attribute, lit by tier. */
+.character-gear {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+}
+.gear-slot {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+  border: 2px solid var(--border-glass);
+  color: var(--text-tertiary);
+  opacity: 0.45;
+  transition: all var(--dur-base) var(--ease-standard);
+}
+.gear-slot .icon { transform: rotate(-45deg); }
+.gear-slot--t1 {
+  opacity: 1;
+  border-color: var(--accent-red);
+  color: var(--accent-red-soft);
+}
+.gear-slot--t2 {
+  opacity: 1;
+  border-color: var(--accent-red);
+  background: var(--accent-red);
+  color: var(--text-primary);
+}
+.gear-slot--t3 {
+  opacity: 1;
+  border-color: var(--accent-yellow);
+  background: var(--accent-yellow);
+  color: var(--bg-void);
+  box-shadow: var(--glow-gold);
 }
 .character-caption {
   position: relative;

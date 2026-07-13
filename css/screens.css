@@ -116,7 +116,7 @@
     display: block;
   }
   .stats-cols .character-panel { margin-bottom: 0; }
-  .stats-cols .character-art { width: min(340px, 26vw); }
+  .stats-cols .character-art { height: min(400px, 32vw); width: auto; }
 
   /* Profile: identity + account + preferences left, data right. */
   .profile-cols {
