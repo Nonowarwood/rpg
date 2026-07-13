@@ -7,13 +7,28 @@ import { STATS } from "../core/config.js";
 import { statProgress } from "../systems/statsSystem.js";
 import { setBarWidth } from "./animations.js";
 import { icon } from "./icons.js";
-import { miiSVG } from "./characterMii.js";
-
 const gridEl = document.getElementById("stat-grid");
+
+// ---------- Mii avatar (real image asset, not code-drawn) ----------
+// The user provides his own Mii render at assets/avatar/mii.png
+// (code-generated avatars were rejected — see CLAUDE.md). The panel
+// stays hidden until the file exists, so shipping the image is the
+// only step needed to turn it on.
 const figureEl = document.getElementById("character-figure");
+const panelEl = figureEl.closest(".character-panel");
+panelEl.hidden = true;
+{
+  const img = new Image();
+  img.alt = "Ton Mii";
+  img.className = "character-art";
+  img.onload = () => {
+    figureEl.replaceChildren(img);
+    panelEl.hidden = false;
+  };
+  img.src = "assets/avatar/mii.png";
+}
 
 export function renderStatsScreen() {
-  figureEl.innerHTML = miiSVG();
 
   gridEl.innerHTML = Object.entries(STATS)
     .map(([key, def]) => {
