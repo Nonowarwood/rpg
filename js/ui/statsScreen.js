@@ -7,13 +7,13 @@ import { STATS } from "../core/config.js";
 import { statProgress } from "../systems/statsSystem.js";
 import { setBarWidth } from "./animations.js";
 import { icon } from "./icons.js";
-import { renderCharacterSprite } from "./characterSprite.js";
+import { miiSVG } from "./characterMii.js";
 
 const gridEl = document.getElementById("stat-grid");
 const figureEl = document.getElementById("character-figure");
 
 export function renderStatsScreen() {
-  renderCharacterSprite(figureEl);
+  figureEl.innerHTML = miiSVG();
 
   gridEl.innerHTML = Object.entries(STATS)
     .map(([key, def]) => {

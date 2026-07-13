@@ -338,11 +338,9 @@
   display: flex;
   justify-content: center;
 }
-.character-canvas {
+.character-art {
   width: min(280px, 64vw);
   height: auto;
-  image-rendering: crisp-edges;
-  image-rendering: pixelated; /* preferred; crisp-edges is the fallback */
   animation: figureBreath 4.5s ease-in-out infinite alternate;
 }
 .character-caption {
