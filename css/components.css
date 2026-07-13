@@ -378,16 +378,18 @@
   transition: all var(--dur-base) var(--ease-standard);
 }
 .gear-slot .icon { transform: rotate(-45deg); }
+/* Rank ladder: bronze (lvl 3+), argent (5+), or (8+), diamant (12+). */
 .gear-slot--t1 {
   opacity: 1;
-  border-color: var(--accent-red);
-  color: var(--accent-red-soft);
+  border-color: #C97C4E;
+  background: rgba(201, 124, 78, 0.22);
+  color: #E0A377;
 }
 .gear-slot--t2 {
   opacity: 1;
-  border-color: var(--accent-red);
-  background: var(--accent-red);
-  color: var(--text-primary);
+  border-color: #C9CDD6;
+  background: rgba(201, 205, 214, 0.25);
+  color: #E4E7EC;
 }
 .gear-slot--t3 {
   opacity: 1;
@@ -395,6 +397,13 @@
   background: var(--accent-yellow);
   color: var(--bg-void);
   box-shadow: var(--glow-gold);
+}
+.gear-slot--t4 {
+  opacity: 1;
+  border-color: var(--accent-cyan-soft);
+  background: var(--accent-cyan);
+  color: var(--bg-void);
+  box-shadow: 0 0 26px rgba(47, 184, 196, 0.45);
 }
 .character-caption {
   position: relative;
