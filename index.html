@@ -26,9 +26,10 @@
 
   <!-- Ambient background glow layers (pure decoration, parallax) -->
   <div class="bg-fx" aria-hidden="true">
-    <div class="bg-glow bg-glow--blue"></div>
-    <div class="bg-glow bg-glow--violet"></div>
-    <div class="bg-glow bg-glow--cyan"></div>
+    <div class="bg-spiral"></div>
+    <div class="bg-slash bg-slash--1"></div>
+    <div class="bg-slash bg-slash--2"></div>
+    <div class="bg-halftone"></div>
     <div class="bg-grain"></div>
   </div>
 
@@ -107,13 +108,13 @@
       </div>
 
       <div class="section-head" id="home-quests-head">
-        <h2 class="section-title">Quêtes du jour</h2>
+        <h2 class="section-title" data-heist>Quêtes du jour</h2>
         <button class="link-btn" data-nav="quests">Voir tout</button>
       </div>
       <div class="quest-preview-list" id="home-quest-preview"></div>
 
       <div class="section-head" id="home-activity-head">
-        <h2 class="section-title">Activité récente</h2>
+        <h2 class="section-title" data-heist>Activité récente</h2>
       </div>
       <div class="history-list" id="home-activity"></div>
     </section>
@@ -121,7 +122,7 @@
     <!-- ---------- QUESTS ---------- -->
     <section class="screen" id="screen-quests" data-screen="quests">
       <header class="screen-header">
-        <h1 class="screen-header__title">Quêtes</h1>
+        <h1 class="screen-header__title" data-heist>Quêtes</h1>
         <button class="fab-inline" id="btn-add-quest" aria-label="Nouvelle quête" data-icon="plus" data-icon-size="20"></button>
       </header>
 
@@ -135,7 +136,7 @@
     <!-- ---------- STATS ---------- -->
     <section class="screen" id="screen-stats" data-screen="stats">
       <header class="screen-header">
-        <h1 class="screen-header__title">Statistiques</h1>
+        <h1 class="screen-header__title" data-heist>Statistiques</h1>
       </header>
       <div class="stat-grid" id="stat-grid"></div>
     </section>
@@ -143,7 +144,7 @@
     <!-- ---------- ACHIEVEMENTS ---------- -->
     <section class="screen" id="screen-achievements" data-screen="achievements">
       <header class="screen-header">
-        <h1 class="screen-header__title">Succès</h1>
+        <h1 class="screen-header__title" data-heist>Succès</h1>
         <span class="screen-header__meta" id="achievements-count">0 / 0</span>
       </header>
       <div class="achievement-grid" id="achievement-grid"></div>
@@ -152,7 +153,7 @@
     <!-- ---------- PROFILE ---------- -->
     <section class="screen" id="screen-profile" data-screen="profile">
       <header class="screen-header">
-        <h1 class="screen-header__title">Profil</h1>
+        <h1 class="screen-header__title" data-heist>Profil</h1>
       </header>
 
       <div class="profile-cols">
@@ -244,7 +245,7 @@
   <div class="overlay overlay--levelup" id="levelup-overlay">
     <div class="levelup-particles" id="levelup-particles"></div>
     <div class="levelup-content">
-      <span class="levelup-content__eyebrow">Niveau supérieur</span>
+      <span class="levelup-content__eyebrow" data-heist>Niveau supérieur</span>
       <div class="levelup-content__level" id="levelup-level-num">13</div>
       <p class="levelup-content__title" id="levelup-title-text">Adventurer</p>
       <button class="btn-primary" id="btn-levelup-close">Continuer</button>
@@ -254,7 +255,7 @@
   <!-- ============ ACHIEVEMENT UNLOCK OVERLAY ============ -->
   <div class="overlay overlay--achievement" id="achievement-overlay">
     <div class="achievement-content">
-      <span class="achievement-content__eyebrow">Succès débloqué</span>
+      <span class="achievement-content__eyebrow" data-heist>Succès débloqué</span>
       <div class="achievement-content__icon" id="achievement-icon"></div>
       <p class="achievement-content__name" id="achievement-name">Premier pas</p>
       <p class="achievement-content__desc" id="achievement-desc"></p>

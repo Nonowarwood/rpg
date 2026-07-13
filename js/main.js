@@ -13,6 +13,7 @@ import { initNavigation, applyNavPosition } from "./ui/navigation.js";
 import { showToast } from "./ui/notifications.js";
 import { showLevelUpOverlay, queueAchievementOverlay } from "./ui/modals.js";
 import { hydrateStaticIcons } from "./ui/icons.js";
+import { hydrateHeistText } from "./ui/heistText.js";
 
 import { renderHome } from "./ui/homeScreen.js";
 import { renderQuestsScreen } from "./ui/questsScreen.js";
@@ -104,6 +105,7 @@ function trackUsageTime() {
 
 function boot() {
   hydrateStaticIcons();
+  hydrateHeistText();
   applyNavPosition(state.settings.navPosition);
   rolloverDayIfNeeded();
   checkStreakDecay();

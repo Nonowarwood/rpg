@@ -27,9 +27,16 @@
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: transform var(--dur-fast) var(--ease-standard);
+  rotate: -1deg;
+  /* Hard white offset (not a blur) = P5 sticker. drop-shadow follows
+     the clip-path shape where box-shadow would draw a rectangle. */
+  filter: drop-shadow(4px 4px 0 rgba(243, 240, 230, 0.9));
+  transition: transform var(--dur-fast) var(--ease-standard), filter var(--dur-fast) var(--ease-standard);
 }
-.btn-primary:active { transform: scale(0.97); }
+.btn-primary:active {
+  transform: translate(3px, 3px);
+  filter: drop-shadow(1px 1px 0 rgba(243, 240, 230, 0.9));
+}
 
 .btn-secondary {
   display: inline-flex;
@@ -182,12 +189,21 @@
   padding: var(--sp-6) var(--sp-5) var(--sp-6);
   margin-bottom: var(--sp-5);
 }
+/* The billboard swirl from P5's "NEW GAME" screen, spinning slowly
+   in the card's corner — replaces the old soft radial glow. */
 .player-card__glow {
   position: absolute;
-  top: -50%; right: -20%;
-  width: 240px; height: 240px;
-  background: radial-gradient(circle, rgba(224,16,46,0.22) 0%, transparent 70%);
-  filter: blur(10px);
+  top: -55%; right: -18%;
+  width: 320px; height: 320px;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(224, 16, 46, 0.3) 0deg 20deg,
+    rgba(224, 16, 46, 0.04) 20deg 40deg
+  );
+  border-radius: 50%;
+  -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 66%);
+  mask-image: radial-gradient(circle, #000 25%, transparent 66%);
+  animation: spinSlow 26s linear infinite;
   pointer-events: none;
 }
 .player-card__top {
@@ -309,6 +325,10 @@
   transition: transform var(--dur-fast) var(--ease-standard), border-color var(--dur-fast);
 }
 .stat-tile:active { transform: scale(0.96); }
+/* Tiles sit slightly off-square, like stickers slapped on a board.
+   The individual `rotate` property keeps :active's transform intact. */
+.stat-tile:nth-child(odd) { rotate: -0.8deg; }
+.stat-tile:nth-child(even) { rotate: 0.6deg; }
 .stat-tile__icon { color: var(--accent-red); }
 .stat-tile__value {
   font-family: var(--font-display);
@@ -379,6 +399,28 @@
 .daily-progress--complete .daily-progress__count,
 .daily-progress--complete .daily-progress__count b { color: var(--accent-yellow); }
 
+/* ---------- Heist lettering (js/ui/heistText.js output) ----------
+   Ransom-note titles: each letter is its own span, rotated/lifted
+   inline; ~1 in 4 letters inverts into a white or red box. */
+.hl {
+  display: inline-block;
+  /* em-based so the hard red offset scales with the title size. */
+  text-shadow: 0.11em 0.11em 0 rgba(224, 16, 46, 0.55);
+}
+.hl--box,
+.hl--box-red {
+  padding: 0 0.09em;
+  margin: 0 0.03em;
+  text-shadow: none;
+}
+.hl--box { background: var(--text-primary); color: var(--bg-void); }
+.hl--box-red { background: var(--accent-red); color: var(--text-primary); }
+.hl-space { display: inline-block; width: 0.38em; }
+/* Eyebrow ribbons already sit on a red fill — drop the red shadow
+   there or it smears into the background. */
+.levelup-content__eyebrow .hl,
+.achievement-content__eyebrow .hl { text-shadow: none; }
+
 /* ---------- Section headers ---------- */
 .section-head {
   display: flex;
@@ -434,6 +476,8 @@
   background: var(--accent-red);
   border-color: var(--accent-red);
   color: var(--text-primary);
+  rotate: -2deg;
+  box-shadow: 3px 3px 0 rgba(243, 240, 230, 0.35);
 }
 
 /* ---------- Quest card (ledger row) ---------- */
@@ -757,6 +801,8 @@
   border: 2px solid var(--border-glass-strong);
   border-left: 3px solid var(--accent-red);
   box-shadow: var(--shadow-elevated);
+  /* `rotate` (not transform) so the slide-in keyframes don't erase it. */
+  rotate: -1.2deg;
   animation: slideInRight var(--dur-base) var(--ease-out-expo) both;
 }
 .toast--leaving { animation: slideOutRight var(--dur-fast) var(--ease-standard) forwards; }
@@ -811,6 +857,32 @@
   animation: hitFlash 480ms var(--ease-out-expo) both;
 }
 
+/* Full-screen red swirl behind the level number — the P5 "NEW GAME"
+   billboard, spinning for as long as the overlay stays open. */
+.overlay--levelup::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 130vmin; height: 130vmin;
+  margin: -65vmin 0 0 -65vmin;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(224, 16, 46, 0.5) 0deg 14deg,
+    rgba(156, 10, 31, 0.08) 14deg 28deg
+  );
+  border-radius: 50%;
+  -webkit-mask-image: radial-gradient(circle, #000 18%, transparent 62%);
+  mask-image: radial-gradient(circle, #000 18%, transparent 62%);
+  opacity: 0;
+  transition: opacity 500ms var(--ease-standard);
+  pointer-events: none;
+}
+/* Only spins while the overlay is actually open. */
+.overlay--levelup.overlay--active::after {
+  opacity: 1;
+  animation: spinSlow 16s linear infinite;
+}
+
 .levelup-content, .achievement-content {
   position: relative;
   text-align: center;
@@ -844,6 +916,8 @@
   color: var(--text-primary);
   -webkit-text-stroke: 2px var(--accent-red);
   margin-bottom: var(--sp-2);
+  rotate: -3deg;
+  text-shadow: 6px 6px 0 rgba(224, 16, 46, 0.45);
 }
 .levelup-content__title {
   font-size: 16px;

@@ -9,6 +9,7 @@ import { createQuest } from "../systems/questSystem.js";
 import { spawnParticles } from "./animations.js";
 import { playSound } from "../systems/soundSystem.js";
 import { icon } from "./icons.js";
+import { heistLetters } from "./heistText.js";
 
 // ---------- Quest creation modal ----------
 const questModal = document.getElementById("quest-modal");
@@ -148,7 +149,7 @@ function drainBigOverlayQueue() {
     playSound("levelup");
   } else {
     achievementIcon.innerHTML = icon(next.icon, { size: 56 });
-    achievementName.textContent = next.name;
+    achievementName.innerHTML = heistLetters(next.name);
     achievementDesc.textContent = next.desc;
     achievementOverlay.classList.add("overlay--active");
     playSound("achievement");

@@ -12,6 +12,7 @@ import { emit } from "../core/eventBus.js";
 import { setBarWidth } from "./animations.js";
 import { icon } from "./icons.js";
 import { avatarInnerHTML } from "./avatar.js";
+import { heistLetters } from "./heistText.js";
 import { applyNavPosition } from "./navigation.js";
 import { playSound } from "../systems/soundSystem.js";
 
@@ -169,7 +170,7 @@ nameInput.addEventListener("input", () => {
   persist();
 
   document.getElementById("home-username").textContent = nameInput.value || "Joueur";
-  document.getElementById("home-player-name").textContent = nameInput.value || "Joueur";
+  document.getElementById("home-player-name").innerHTML = heistLetters(nameInput.value || "Joueur");
   document.getElementById("home-avatar").innerHTML = avatarInnerHTML();
   document.getElementById("quick-avatar-glyph").innerHTML = avatarInnerHTML();
   document.getElementById("profile-avatar").innerHTML = avatarInnerHTML();

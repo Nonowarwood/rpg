@@ -11,6 +11,7 @@ import { isQuestCompletedToday } from "../systems/questSystem.js";
 import { questCardHTML, wireQuestCompletionHandlers } from "./questsScreen.js";
 import { setBarWidth, animateCounter } from "./animations.js";
 import { avatarInnerHTML } from "./avatar.js";
+import { heistLetters } from "./heistText.js";
 
 const previewEl = document.getElementById("home-quest-preview");
 
@@ -43,7 +44,7 @@ function greetingForNow() {
 export function renderHome() {
   document.getElementById("home-greeting").textContent = greetingForNow();
   document.getElementById("home-username").textContent = state.profile.name;
-  document.getElementById("home-player-name").textContent = state.profile.name;
+  document.getElementById("home-player-name").innerHTML = heistLetters(state.profile.name);
   document.getElementById("home-player-title").textContent = currentTitle();
   document.getElementById("home-avatar").innerHTML = avatarInnerHTML();
   document.getElementById("quick-avatar-glyph").innerHTML = avatarInnerHTML();
