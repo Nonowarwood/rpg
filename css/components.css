@@ -307,6 +307,53 @@
   animation: shimmer 2.6s ease-in-out infinite;
 }
 
+/* ---------- Character panel (stats screen) ---------- */
+.character-panel {
+  position: relative;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-glass);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+  padding: var(--sp-5) var(--sp-4) var(--sp-5);
+  margin-bottom: var(--sp-5);
+  overflow: hidden;
+}
+.character-panel::before {
+  content: '';
+  position: absolute;
+  top: -45%; right: -22%;
+  width: 300px; height: 300px;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(224, 16, 46, 0.16) 0deg 20deg,
+    rgba(224, 16, 46, 0.02) 20deg 40deg
+  );
+  border-radius: 50%;
+  -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 66%);
+  mask-image: radial-gradient(circle, #000 25%, transparent 66%);
+  animation: spinSlow 30s linear infinite;
+  pointer-events: none;
+}
+.character-figure {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.character-figure svg {
+  width: min(230px, 56vw);
+  height: auto;
+  animation: figureBreath 4.5s ease-in-out infinite alternate;
+}
+.character-caption {
+  position: relative;
+  margin-top: var(--sp-4);
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+
 /* ---------- Stat tiles (home / profile overview) ---------- */
 .stat-tiles {
   display: grid;

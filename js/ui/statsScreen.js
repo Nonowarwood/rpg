@@ -7,10 +7,14 @@ import { STATS } from "../core/config.js";
 import { statProgress } from "../systems/statsSystem.js";
 import { setBarWidth } from "./animations.js";
 import { icon } from "./icons.js";
+import { characterSVG } from "./characterFigure.js";
 
 const gridEl = document.getElementById("stat-grid");
+const figureEl = document.getElementById("character-figure");
 
 export function renderStatsScreen() {
+  figureEl.innerHTML = characterSVG();
+
   gridEl.innerHTML = Object.entries(STATS)
     .map(([key, def]) => {
       const p = statProgress(key);

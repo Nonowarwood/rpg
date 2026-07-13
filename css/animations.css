@@ -125,6 +125,12 @@
   to   { transform: translateY(14px); }
 }
 
+/* Character silhouette idle breathing (stats screen). */
+@keyframes figureBreath {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-5px); }
+}
+
 /* ==========================================================
    Applied motion (entrances + stagger)
    ========================================================== */

@@ -103,6 +103,16 @@
   #home-activity-head { grid-area: ahead; }
   #home-activity { grid-area: alist; align-self: start; padding-bottom: 0; }
 
+  /* Stats: character silhouette left, the 8 attribute cards right. */
+  .stats-cols {
+    display: grid;
+    grid-template-columns: minmax(320px, 5fr) 7fr;
+    column-gap: var(--sp-8);
+    align-items: start;
+  }
+  .stats-cols .character-panel { margin-bottom: 0; }
+  .stats-cols .character-figure svg { width: min(280px, 24vw); }
+
   /* Profile: identity + account + preferences left, data right. */
   .profile-cols {
     display: grid;
