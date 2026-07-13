@@ -326,6 +326,59 @@
   letter-spacing: 0.05em;
 }
 
+/* ---------- Daily objective strip (home) ---------- */
+.daily-progress {
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  background: var(--bg-surface);
+  border: 2px solid var(--border-glass);
+  border-left: 4px solid var(--accent-red);
+  margin-bottom: var(--sp-3);
+}
+.daily-progress__labels {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+}
+.daily-progress__eyebrow {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+.daily-progress__count {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+.daily-progress__count b {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+.daily-progress__bar {
+  height: 8px;
+  background: var(--bg-void);
+  border: 1px solid var(--border-glass);
+  overflow: hidden;
+}
+.daily-progress__fill {
+  height: 100%;
+  background: var(--gradient-xp);
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 100%, 0 100%);
+  transition: width 900ms var(--ease-out-expo);
+}
+/* Yellow = reward: the strip flips once every daily quest is done. */
+.daily-progress--complete { border-left-color: var(--accent-yellow); }
+.daily-progress--complete .daily-progress__fill { background: var(--accent-yellow); clip-path: none; }
+.daily-progress--complete .daily-progress__count,
+.daily-progress--complete .daily-progress__count b { color: var(--accent-yellow); }
+
 /* ---------- Section headers ---------- */
 .section-head {
   display: flex;

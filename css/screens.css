@@ -77,25 +77,31 @@
   #screen-home.screen--active {
     display: grid;
     grid-template-columns: minmax(380px, 5fr) 7fr;
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-rows: auto auto auto auto auto auto 1fr;
     grid-template-areas:
-      "topbar topbar"
-      "player qhead"
-      "player qlist"
-      "tiles  qlist";
+      "topbar   topbar"
+      "player   qhead"
+      "player   qlist"
+      "progress qlist"
+      "tiles    qlist"
+      "ahead    qlist"
+      "alist    qlist";
     column-gap: var(--sp-8);
     align-content: start;
   }
   #screen-home .topbar { grid-area: topbar; }
   #screen-home .player-card { grid-area: player; align-self: start; margin-bottom: var(--sp-3); }
+  #screen-home .daily-progress { grid-area: progress; align-self: start; }
   #screen-home .stat-tiles {
     grid-area: tiles;
     grid-template-columns: repeat(2, 1fr);
     align-self: start;
-    margin-bottom: 0;
+    margin-bottom: var(--sp-6);
   }
-  #screen-home .section-head { grid-area: qhead; }
+  #home-quests-head { grid-area: qhead; }
   #screen-home .quest-preview-list { grid-area: qlist; align-content: start; }
+  #home-activity-head { grid-area: ahead; }
+  #home-activity { grid-area: alist; align-self: start; padding-bottom: 0; }
 
   /* Profile: identity + account + preferences left, data right. */
   .profile-cols {

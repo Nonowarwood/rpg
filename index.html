@@ -73,16 +73,21 @@
         </div>
       </div>
 
+      <div class="daily-progress" id="home-daily-progress">
+        <div class="daily-progress__labels">
+          <span class="daily-progress__eyebrow">Objectif du jour</span>
+          <span class="daily-progress__count"><b id="daily-progress-done">0</b> / <span id="daily-progress-total">0</span> quêtes</span>
+        </div>
+        <div class="daily-progress__bar">
+          <div class="daily-progress__fill" id="daily-progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
       <div class="stat-tiles" id="home-stat-tiles">
         <div class="stat-tile">
           <span class="stat-tile__icon" data-icon="flame" data-icon-size="18"></span>
           <span class="stat-tile__value" id="tile-streak">0</span>
           <span class="stat-tile__label">Streak</span>
-        </div>
-        <div class="stat-tile">
-          <span class="stat-tile__icon" data-icon="sword" data-icon-size="18"></span>
-          <span class="stat-tile__value" id="tile-quests-today">0</span>
-          <span class="stat-tile__label">Quêtes du jour</span>
         </div>
         <div class="stat-tile">
           <span class="stat-tile__icon" data-icon="sparkle" data-icon-size="18"></span>
@@ -101,11 +106,16 @@
         </div>
       </div>
 
-      <div class="section-head">
+      <div class="section-head" id="home-quests-head">
         <h2 class="section-title">Quêtes du jour</h2>
         <button class="link-btn" data-nav="quests">Voir tout</button>
       </div>
       <div class="quest-preview-list" id="home-quest-preview"></div>
+
+      <div class="section-head" id="home-activity-head">
+        <h2 class="section-title">Activité récente</h2>
+      </div>
+      <div class="history-list" id="home-activity"></div>
     </section>
 
     <!-- ---------- QUESTS ---------- -->
