@@ -41,7 +41,9 @@ main.js  (bootstrap: wires eventBus events -> UI feedback, initial render)
 
 Game balance (XP curve, categories, difficulties, titles, stat list) lives entirely in `js/core/config.js` — that's the one file to edit to rebalance the game.
 
-Date/streak logic always goes through `js/core/date.js` (`todayISO`/`yesterdayISO`), which uses **local** calendar-day boundaries, not `toISOString()`/UTC. Don't reintroduce `toISOString().slice(0,10)` for "today" checks — it flips at UTC midnight, not the user's midnight, and silently breaks streaks for non-UTC users.
+Date/streak logic always goes through `js/core/date.js` (`todayISO`/`yesterdayISO`/`daysBetweenISO`), which uses **local** calendar-day boundaries, not `toISOString()`/UTC. Don't reintroduce `toISOString().slice(0,10)` for "today" checks — it flips at UTC midnight, not the user's midnight, and silently breaks streaks for non-UTC users.
+
+**Streak freezes**: `state.streak.freezes` (default 0, cap 2) — one is earned every 7 consecutive streak days (`registerCompletionForStreak`), and `checkStreakDecay` consumes one per missed day instead of resetting (it back-dates `lastCompletionDate` to yesterday so today's first completion continues the streak). Events `streak:freeze-earned` / `streak:freeze-used` feed toasts in `main.js`; the stock shows as cyan snowflakes on the home streak tile.
 
 ### Event bus (`js/core/eventBus.js`)
 
@@ -49,7 +51,7 @@ Systems emit events after mutating state (`quest:completed`, `quest:created`, `q
 
 ### Quest model: simple vs tiered
 
-Quests come in two shapes. **Simple** quests have `{ difficulty, xp }` — one check per day. **Tiered** quests have `tiers: [{ label, xp }, ...]` instead (e.g. "Boire de l'eau": 500 ml → 1 L → 1,5 L) — each check completes the *current* tier, awards that tier's XP, and counts as one quest completion. `questTierInfo(quest)` is the one place tier progress is interpreted: progress only counts if `lastCompletedDate` is today, so tiered dailies reset each morning with **no rollover pass** — never read `quest.tierProgress` directly, it can be stale from a previous day. User-created quests (quest modal) are always simple; tiered quests come from the starter catalog only.
+Quests come in two shapes. **Simple** quests have `{ difficulty, xp }` — one check per day. **Tiered** quests have `tiers: [{ label, xp }, ...]` instead (e.g. "Boire de l'eau": 500 ml → 1 L → 1,5 L) — each check completes the *current* tier, awards that tier's XP, and counts as one quest completion. `questTierInfo(quest)` is the one place tier progress is interpreted: progress only counts if `lastCompletedDate` is today, so tiered dailies reset each morning with **no rollover pass** — never read `quest.tierProgress` directly, it can be stale from a previous day. Users can create and edit tiered quests from the quest modal (type "À paliers", 2–5 tiers, each with label + XP); tiered quests are forced `repeat: "daily"`. The same modal doubles as the edit form (`openQuestModal(quest)` prefills it; `updateQuest()` handles simple↔tiered conversion). Long-press (mobile) or right-click (desktop) on a quest card opens the actions sheet (`openQuestActions`): Modifier / Supprimer with a two-tap inline delete confirmation — `confirm()` is gone.
 
 The starter catalog (`STARTER_QUESTS` in `js/data/defaultData.js`) uses stable `"starter_*"` ids and a `CATALOG_VERSION`. `mergeWithDefaults()` in `core/state.js` appends any missing starter quests to saves with an older `catalogVersion` (and drops the v1 pre-catalog starters by name via `LEGACY_STARTER_NAMES`). To ship new starter quests: add them to `STARTER_QUESTS` **and bump `CATALOG_VERSION`** — without the bump, existing saves never see them.
 

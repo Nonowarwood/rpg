@@ -454,6 +454,11 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+.stat-tile__freezes {
+  color: var(--accent-cyan);
+  margin-left: 2px;
+}
+.stat-tile__freezes .icon { vertical-align: -2px; }
 
 /* ---------- Daily objective strip (home) ---------- */
 .daily-progress {
@@ -1111,4 +1116,58 @@
   display: flex;
   gap: var(--sp-3);
   margin-top: var(--sp-2);
+}
+
+/* ---------- Tier editor (custom graded quests) ---------- */
+.tier-row {
+  display: flex;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+.tier-row__label { flex: 1; min-width: 0; }
+.tier-row__xp { width: 76px; flex-shrink: 0; text-align: center; }
+.tier-row__remove {
+  width: 42px;
+  flex-shrink: 0;
+  border: 2px solid var(--border-glass);
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+.tier-row__remove .icon { transform: rotate(45deg); } /* plus -> croix */
+.tier-row__remove:not(:disabled):hover {
+  color: var(--accent-red-soft);
+  border-color: var(--accent-red-dark);
+}
+.tier-row__remove:disabled { opacity: 0.3; }
+.tier-add-btn {
+  width: 100%;
+  padding: 10px;
+  border: 2px dashed var(--border-glass);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: border-color var(--dur-fast), color var(--dur-fast);
+}
+.tier-add-btn:hover { border-color: var(--accent-red-dark); color: var(--text-primary); }
+
+/* ---------- Quest actions sheet ---------- */
+.qa-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-2);
+}
+.qa-delete {
+  color: var(--accent-red-soft);
+  border-color: var(--accent-red-dark);
+}
+.qa-delete--confirm {
+  background: var(--accent-red);
+  border-color: var(--accent-red);
+  color: var(--text-primary);
 }

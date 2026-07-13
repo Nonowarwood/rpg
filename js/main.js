@@ -45,12 +45,30 @@ on("quest:created", () => {
   refreshAll();
 });
 
+on("quest:updated", () => {
+  showToast({ type: "quest", title: "Quête modifiée", sound: "click" });
+  refreshAll();
+});
+
 on("quest:deleted", refreshAll);
 
 on("streak:updated", ({ current, isRecord }) => {
   if (isRecord) {
     showToast({ type: "streak", title: "Nouveau record de streak !", desc: `${current} jours d'affilée`, sound: "achievement" });
   }
+});
+
+on("streak:freeze-earned", ({ freezes }) => {
+  showToast({ type: "stat", icon: "snowflake", title: "Gel de streak gagné", desc: `Protège un jour manqué · stock : ${freezes}`, sound: "achievement" });
+});
+
+on("streak:freeze-used", ({ used, current, remaining }) => {
+  showToast({
+    type: "stat",
+    icon: "snowflake",
+    title: used > 1 ? `${used} gels de streak utilisés` : "Gel de streak utilisé",
+    desc: `Ton streak de ${current} jours est sauf · reste ${remaining}`,
+  });
 });
 
 on("stat:levelup", ({ statKey, level }) => {

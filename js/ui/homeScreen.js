@@ -12,6 +12,7 @@ import { questCardHTML, wireQuestCompletionHandlers } from "./questsScreen.js";
 import { setBarWidth, animateCounter } from "./animations.js";
 import { avatarInnerHTML } from "./avatar.js";
 import { heistLetters } from "./heistText.js";
+import { icon } from "./icons.js";
 
 const previewEl = document.getElementById("home-quest-preview");
 
@@ -56,6 +57,7 @@ export function renderHome() {
   setBarWidth(document.getElementById("home-xp-fill"), progress.percent);
 
   animateTile(document.getElementById("tile-streak"), state.streak.current);
+  renderStreakFreezes();
   animateTile(document.getElementById("tile-xp-today"), state.counters.todayXp);
   animateTile(document.getElementById("tile-total-quests"), state.counters.totalQuestsCompleted);
   document.getElementById("tile-focus-time").textContent = formatMinutes(state.counters.focusTimeMinutes);
@@ -63,6 +65,13 @@ export function renderHome() {
   renderDailyProgress();
   renderQuestPreview();
   renderActivity();
+}
+
+// One snowflake per streak freeze in stock, next to the streak label.
+function renderStreakFreezes() {
+  const el = document.getElementById("tile-streak-freezes");
+  const count = state.streak.freezes || 0;
+  el.innerHTML = Array.from({ length: count }, () => icon("snowflake", { size: 11 })).join("");
 }
 
 // "Objectif du jour": fully-completed daily quests out of all daily

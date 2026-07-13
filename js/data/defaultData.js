@@ -31,6 +31,7 @@ export function createDefaultState() {
       current: 0,
       longest: 0,
       lastCompletionDate: null,
+      freezes: 0, // earned every 7 streak days (max 2), each pardons one missed day
     },
     stats,
     quests: STARTER_QUESTS.map((q) => structuredClone(q)),

@@ -13,22 +13,61 @@ import { registerCompletionForStreak } from "./streakSystem.js";
 import { checkAchievements } from "./achievementSystem.js";
 import { todayISO } from "../core/date.js";
 
-export function createQuest({ name, description, category, difficulty, repeat }) {
-  const xp = DIFFICULTIES[difficulty]?.xp ?? 30;
+export function createQuest({ name, description, category, difficulty, repeat, tiers }) {
   const quest = {
     id: generateQuestId(),
     name: name.trim(),
     description: (description || "").trim(),
     category,
-    difficulty,
-    xp,
-    repeat, // 'daily' | 'once'
     lastCompletedDate: null,
     createdAt: Date.now(),
   };
+  if (tiers && tiers.length >= 2) {
+    // Tiered quests are daily by nature: progress only counts for
+    // the current day (see questTierInfo), so "once" wouldn't mean
+    // anything coherent for them.
+    quest.tiers = tiers;
+    quest.tierProgress = 0;
+    quest.repeat = "daily";
+  } else {
+    quest.difficulty = difficulty;
+    quest.xp = DIFFICULTIES[difficulty]?.xp ?? 30;
+    quest.repeat = repeat; // 'daily' | 'once'
+  }
   state.quests.unshift(quest);
   persist();
   emit("quest:created", quest);
+  return quest;
+}
+
+// Edits a quest in place. Handles simple<->tiered conversion: passing
+// `tiers` makes/keeps it tiered, passing `difficulty` without tiers
+// makes/keeps it simple.
+export function updateQuest(id, { name, description, category, difficulty, repeat, tiers }) {
+  const quest = state.quests.find((q) => q.id === id);
+  if (!quest) return null;
+
+  quest.name = name.trim();
+  quest.description = (description || "").trim();
+  quest.category = category;
+
+  if (tiers && tiers.length >= 2) {
+    quest.tiers = tiers;
+    quest.repeat = "daily";
+    delete quest.difficulty;
+    delete quest.xp;
+    // Today's progress survives an edit but can't exceed the new count.
+    quest.tierProgress = Math.min(quest.tierProgress || 0, tiers.length);
+  } else {
+    delete quest.tiers;
+    delete quest.tierProgress;
+    quest.difficulty = difficulty;
+    quest.xp = DIFFICULTIES[difficulty]?.xp ?? 30;
+    quest.repeat = repeat;
+  }
+
+  persist();
+  emit("quest:updated", quest);
   return quest;
 }
 

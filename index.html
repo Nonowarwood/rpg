@@ -94,7 +94,7 @@
         <div class="stat-tile">
           <span class="stat-tile__icon" data-icon="flame" data-icon-size="18"></span>
           <span class="stat-tile__value" id="tile-streak">0</span>
-          <span class="stat-tile__label">Streak</span>
+          <span class="stat-tile__label">Streak <span class="stat-tile__freezes" id="tile-streak-freezes" title="Gels de streak"></span></span>
         </div>
         <div class="stat-tile">
           <span class="stat-tile__icon" data-icon="sparkle" data-icon-size="18"></span>
@@ -281,7 +281,7 @@
   <div class="overlay overlay--modal" id="quest-modal">
     <div class="modal-sheet">
       <div class="modal-sheet__handle"></div>
-      <h2 class="modal-sheet__title">Nouvelle quête</h2>
+      <h2 class="modal-sheet__title" id="qf-title">Nouvelle quête</h2>
 
       <form id="quest-form">
         <label class="field">
@@ -300,11 +300,19 @@
         </div>
 
         <div class="field">
+          <span class="field__label">Type</span>
+          <div class="option-row" id="qf-type-row">
+            <button type="button" class="option-pill option-pill--active" data-type="simple">Simple</button>
+            <button type="button" class="option-pill" data-type="tiered">À paliers</button>
+          </div>
+        </div>
+
+        <div class="field" id="qf-difficulty-field">
           <span class="field__label">Difficulté</span>
           <div class="option-row" id="qf-difficulty-row"></div>
         </div>
 
-        <div class="field">
+        <div class="field" id="qf-repeat-field">
           <span class="field__label">Répétition</span>
           <div class="option-row" id="qf-repeat-row">
             <button type="button" class="option-pill option-pill--active" data-repeat="daily">Quotidienne</button>
@@ -312,11 +320,30 @@
           </div>
         </div>
 
+        <div class="field" id="qf-tiers-field" hidden>
+          <span class="field__label">Paliers (dans l'ordre)</span>
+          <div id="qf-tier-rows"></div>
+          <button type="button" class="tier-add-btn" id="qf-tier-add">+ Ajouter un palier</button>
+        </div>
+
         <div class="modal-sheet__actions">
           <button type="button" class="btn-secondary" id="btn-cancel-quest">Annuler</button>
-          <button type="submit" class="btn-primary">Créer la quête</button>
+          <button type="submit" class="btn-primary" id="qf-submit">Créer la quête</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ============ QUEST ACTIONS SHEET (long press / right click) ============ -->
+  <div class="overlay overlay--modal" id="quest-actions">
+    <div class="modal-sheet">
+      <div class="modal-sheet__handle"></div>
+      <h2 class="modal-sheet__title" id="qa-title">Quête</h2>
+      <div class="qa-buttons">
+        <button type="button" class="btn-secondary" id="qa-edit">Modifier</button>
+        <button type="button" class="btn-secondary qa-delete" id="qa-delete">Supprimer</button>
+        <button type="button" class="btn-secondary" id="qa-cancel">Annuler</button>
+      </div>
     </div>
   </div>
 

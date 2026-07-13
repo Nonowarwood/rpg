@@ -6,10 +6,11 @@
 
 import { state } from "../core/state.js";
 import { CATEGORIES, DIFFICULTIES } from "../core/config.js";
-import { completeQuest, deleteQuest, isQuestCompletedToday, questTierInfo } from "../systems/questSystem.js";
+import { completeQuest, isQuestCompletedToday, questTierInfo } from "../systems/questSystem.js";
 import { spawnXpPopup } from "./animations.js";
 import { playSound } from "../systems/soundSystem.js";
 import { icon } from "./icons.js";
+import { openQuestActions } from "./modals.js";
 
 let activeCategoryFilter = "all";
 
@@ -121,6 +122,8 @@ export function wireQuestCompletionHandlers(containerEl) {
     }
   });
 
+  // Long-press (mobile) or right-click (desktop) opens the quest
+  // actions sheet: Modifier / Supprimer.
   let pressTimer = null;
   containerEl.addEventListener("pointerdown", (e) => {
     const card = e.target.closest(".quest-card");
@@ -128,15 +131,20 @@ export function wireQuestCompletionHandlers(containerEl) {
     longPressFired = false;
     pressTimer = setTimeout(() => {
       longPressFired = true;
-      const quest = state.quests.find((q) => q.id === card.dataset.questId);
-      if (quest && confirm(`Supprimer la quête "${quest.name}" ?`)) {
-        deleteQuest(quest.id);
-      }
+      openQuestActions(card.dataset.questId);
     }, 550);
   });
   ["pointerup", "pointerleave", "pointercancel"].forEach((evt) =>
     containerEl.addEventListener(evt, () => clearTimeout(pressTimer))
   );
+
+  containerEl.addEventListener("contextmenu", (e) => {
+    const card = e.target.closest(".quest-card");
+    if (!card) return;
+    e.preventDefault();
+    clearTimeout(pressTimer);
+    openQuestActions(card.dataset.questId);
+  });
 }
 
 wireQuestCompletionHandlers(questListEl);

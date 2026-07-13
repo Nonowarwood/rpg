@@ -21,3 +21,11 @@ export function yesterdayISO() {
   d.setDate(d.getDate() - 1);
   return toLocalISO(d);
 }
+
+// Whole days from ISO date `a` to ISO date `b` (positive if b is
+// later). Parses as local dates so DST shifts can't skew the count.
+export function daysBetweenISO(a, b) {
+  const [ya, ma, da] = a.split("-").map(Number);
+  const [yb, mb, db] = b.split("-").map(Number);
+  return Math.round((new Date(yb, mb - 1, db) - new Date(ya, ma - 1, da)) / 86400000);
+}
