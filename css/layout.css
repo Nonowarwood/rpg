@@ -91,6 +91,18 @@
 .bg-diamond--1 { top: 18%; left: 9%; width: 18px; height: 18px; }
 .bg-diamond--2 { top: 66%; right: 8%; width: 26px; height: 26px; animation-duration: 18s; animation-delay: -6s; }
 .bg-diamond--3 { top: 40%; left: 47%; width: 12px; height: 12px; opacity: 0.6; animation-duration: 11s; animation-delay: -3s; }
+/* City silhouette along the bottom edge (P5 anime skyline asset),
+   faded to nothing before it reaches content height. */
+.bg-city {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: min(30vh, 320px);
+  background: url("../assets/da/skyline.jpg") bottom center / cover no-repeat;
+  opacity: 0.16;
+  -webkit-mask-image: linear-gradient(to top, #000 35%, transparent 95%);
+  mask-image: linear-gradient(to top, #000 35%, transparent 95%);
+}
+
 /* Edge vignette: darkens the borders so the content column pops. */
 .bg-vignette {
   position: absolute;

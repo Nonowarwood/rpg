@@ -13,6 +13,19 @@
   text-align: center;
   margin-bottom: var(--sp-6);
 }
+/* Shibuya street artwork (assets/da/) as a watermark behind the
+   identity card; children stay above the pseudo-element. */
+.profile-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(11, 11, 12, 0.45), rgba(11, 11, 12, 0.85)),
+    url("../assets/da/rue-shibuya.jpg") center 28% / cover;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.profile-card > * { position: relative; }
 .profile-name-input {
   background: transparent;
   border: none;
@@ -64,6 +77,18 @@
 }
 
 /* ---------- Achievements screen ---------- */
+/* The screen header becomes a star-pattern banner (assets/da/) —
+   reward realm, so it earns a diagonal cut like other hero pieces. */
+#screen-achievements .screen-header {
+  position: relative;
+  padding: var(--sp-5) var(--sp-4);
+  background:
+    linear-gradient(100deg, rgba(11, 11, 12, 0.42) 0%, rgba(11, 11, 12, 0.88) 78%),
+    url("../assets/da/stars.jpg") center / cover;
+  border: 2px solid var(--border-glass);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+}
+
 #achievement-grid {
   padding-bottom: var(--sp-6);
 }

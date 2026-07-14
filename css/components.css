@@ -958,6 +958,35 @@
   pointer-events: auto;
 }
 
+/* ---------- Overlay art backdrops (assets/da/) ----------
+   Real P5 artwork behind the big moments, dimmed hard so the
+   content stays on top of the hierarchy. */
+.overlay-art {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 600ms var(--ease-standard);
+}
+.overlay--active .overlay-art { opacity: 0.3; }
+.overlay-art--hand {
+  background-image: url("../assets/da/joker-hand.jpg");
+}
+.overlay-art--stars {
+  background-image: url("../assets/da/stars.jpg");
+  opacity: 0;
+}
+.overlay--active .overlay-art--stars { opacity: 0.22; }
+/* Radial fade so the artwork melts into the overlay's dark veil. */
+.overlay-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(90% 90% at 50% 50%, transparent 30%, rgba(6, 6, 6, 0.9) 100%);
+}
+
 /* Hard red flash when the level-up overlay opens (P5 "all-out"). */
 .overlay--levelup::before {
   content: '';
