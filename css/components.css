@@ -712,48 +712,83 @@
   z-index: 5;
 }
 
-/* ---------- Stat grid (Stats screen) ---------- */
+/* ---------- Stat grid (Stats screen) ----------
+   P5 tabletop-sheet "skills" stack: skewed banner rows alternating
+   red and black, ragged offsets, and a white slanted slot as the
+   progress bar. Content is un-skewed inside each parallelogram. */
 .stat-grid {
+  --stat-skew: -8deg;
   display: flex;
   flex-direction: column;
-  gap: var(--sp-3);
+  gap: 6px;
+  padding: 0 10px; /* room for the skew + ragged offsets */
 }
 .stat-card {
   display: flex;
   align-items: center;
   gap: var(--sp-4);
-  padding: var(--sp-4) var(--sp-5);
-  background: var(--bg-surface);
-  border: 2px solid var(--border-glass);
+  padding: 10px var(--sp-5);
+  transform: skewX(var(--stat-skew));
+  border: 2px solid transparent;
 }
+.stat-card > * { transform: skewX(calc(-1 * var(--stat-skew))); }
+.stat-card:nth-child(odd) {
+  background: var(--accent-red);
+  color: var(--bg-void);
+  rotate: -0.5deg;
+}
+.stat-card:nth-child(even) {
+  background: #101013;
+  border-color: var(--accent-red);
+  color: var(--text-primary);
+  rotate: 0.4deg;
+  margin-left: 10px;
+}
+/* Ragged stack: every third row sticks out the other way. */
+.stat-card:nth-child(3n) { margin-right: 12px; }
 .stat-card__icon {
-  width: 46px; height: 46px;
-  background: var(--bg-void);
-  border: 2px solid var(--border-glass-strong);
-  color: var(--accent-cyan);
+  width: 40px; height: 40px;
+  background: transparent;
+  border: 2px solid currentColor;
+  color: inherit;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.stat-card__body { flex: 1; }
+.stat-card__body { flex: 1; min-width: 0; }
 .stat-card__top {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   margin-bottom: 6px;
 }
-.stat-card__name { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; }
-.stat-card__level { font-size: 11.5px; color: var(--text-tertiary); font-weight: 700; }
+.stat-card__name {
+  font-family: var(--font-number);
+  font-size: 14.5px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.stat-card__level {
+  font-family: var(--font-number);
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+/* The white "slot" from the sheet — slanted like its row. */
 .stat-card__bar {
-  height: 8px;
-  background: var(--bg-void);
-  border: 1px solid var(--border-glass);
+  height: 12px;
+  background: var(--text-primary);
+  border: 2px solid rgba(11, 11, 12, 0.6);
   overflow: hidden;
+  transform: skewX(var(--stat-skew));
 }
 .stat-card__bar-fill {
   height: 100%;
   background: var(--gradient-primary);
   transition: width 800ms var(--ease-out-expo);
 }
+.stat-card:nth-child(odd) .stat-card__bar-fill { background: var(--bg-void); }
 
 /* Mini stat grid used in profile */
 .mini-stat-grid {

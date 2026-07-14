@@ -406,7 +406,7 @@ body[data-nav-position="top"] .notification-stack {
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--sp-3);
+    gap: 8px var(--sp-5);
   }
 
   .achievement-grid {
