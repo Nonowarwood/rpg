@@ -165,6 +165,31 @@
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
+/* Day-of-week sticker + live weather chip (assets/da/ cutouts). */
+.topbar__badges {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-left: auto;
+  padding-right: var(--sp-4);
+}
+.topbar__day {
+  height: 34px;
+  rotate: -3deg;
+  filter: drop-shadow(2px 2px 0 rgba(224, 16, 46, 0.35));
+}
+.topbar__weather {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.topbar__weather img { height: 22px; }
+.topbar__weather b {
+  font-family: var(--font-number);
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--text-primary);
+}
 
 /* ---------- Generic screen header (Quests/Stats/Achievements/Profile) ---------- */
 .screen-header {

@@ -13,6 +13,7 @@ import { setBarWidth, animateCounter } from "./animations.js";
 import { avatarInnerHTML } from "./avatar.js";
 import { heistLetters } from "./heistText.js";
 import { icon } from "./icons.js";
+import { getTodayWeather } from "../systems/weatherSystem.js";
 
 const previewEl = document.getElementById("home-quest-preview");
 
@@ -42,8 +43,34 @@ function greetingForNow() {
   return "Bonsoir";
 }
 
+// Day-of-week art-book sticker (jour-1.png = lundi … jour-7.png =
+// dimanche) next to the greeting.
+function renderDaySticker() {
+  const el = document.getElementById("topbar-day");
+  const n = new Date().getDay() || 7; // JS: 0 = dimanche
+  const src = `assets/da/jour-${n}.png`;
+  if (!el.getAttribute("src") || !el.src.endsWith(src)) el.src = src;
+  el.hidden = false;
+}
+
+// Live weather chip (P5 sticker icon + max temp). Fetched once per
+// session — geolocation refusal or offline just keeps it hidden.
+let weatherRequested = false;
+function renderWeather() {
+  if (weatherRequested) return;
+  weatherRequested = true;
+  getTodayWeather().then((w) => {
+    if (!w) return;
+    document.getElementById("topbar-weather-icon").src = `assets/da/meteo-${w.kind}.png`;
+    document.getElementById("topbar-weather-temp").textContent = `${w.temp}°`;
+    document.getElementById("topbar-weather").hidden = false;
+  });
+}
+
 export function renderHome() {
   document.getElementById("home-greeting").textContent = greetingForNow();
+  renderDaySticker();
+  renderWeather();
   document.getElementById("home-username").textContent = state.profile.name;
   document.getElementById("home-player-name").innerHTML = heistLetters(state.profile.name);
   document.getElementById("home-player-title").textContent = currentTitle();

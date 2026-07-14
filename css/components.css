@@ -1036,6 +1036,14 @@
   padding: var(--sp-8) var(--sp-6);
   z-index: 2;
 }
+/* The art-book LEVEL UP!! sticker replaces the text eyebrow. */
+.levelup-content__sticker {
+  height: 96px;
+  rotate: -4deg;
+  margin-bottom: var(--sp-5);
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.6));
+}
+
 .levelup-content__eyebrow, .achievement-content__eyebrow {
   display: inline-block;
   font-family: var(--font-display);

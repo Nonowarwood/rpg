@@ -50,6 +50,13 @@
           <span class="topbar__eyebrow" id="home-greeting">Bienvenue</span>
           <span class="topbar__name" id="home-username">Joueur</span>
         </div>
+        <div class="topbar__badges">
+          <span class="topbar__weather" id="topbar-weather" hidden>
+            <img id="topbar-weather-icon" src="" alt="" />
+            <b id="topbar-weather-temp"></b>
+          </span>
+          <img class="topbar__day" id="topbar-day" src="" alt="" hidden />
+        </div>
         <button class="icon-btn" id="btn-open-profile-quick" data-nav="profile" aria-label="Profil">
           <span class="icon-btn__glyph" id="quick-avatar-glyph">A</span>
         </button>
@@ -261,7 +268,7 @@
     <div class="overlay-art overlay-art--hand"></div>
     <div class="levelup-particles" id="levelup-particles"></div>
     <div class="levelup-content">
-      <span class="levelup-content__eyebrow" data-heist>Niveau supérieur</span>
+      <img class="levelup-content__sticker" src="assets/da/level-up.png" alt="Level up !" />
       <div class="levelup-content__level" id="levelup-level-num">13</div>
       <p class="levelup-content__title" id="levelup-title-text">Adventurer</p>
       <button class="btn-primary" id="btn-levelup-close">Continuer</button>
