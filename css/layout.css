@@ -181,8 +181,9 @@
   text-transform: uppercase;
 }
 .screen-header__meta {
+  font-family: var(--font-number);
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   color: var(--accent-yellow);

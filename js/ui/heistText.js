@@ -20,10 +20,17 @@ export function heistLetters(text) {
   return [...String(text)]
     .map((ch) => {
       if (ch === " ") return `<span class="hl-space"> </span>`;
-      const seed = (letterIndex * 7 + ch.toLowerCase().charCodeAt(0)) % 8;
+      const code = ch.toLowerCase().charCodeAt(0);
+      const seed = (letterIndex * 7 + code) % 8;
       // Never box the first letter — the word stays instantly readable.
       const boxed = letterIndex > 0 && seed >= 6;
-      const cls = boxed ? (seed === 7 ? "hl hl--box-red" : "hl hl--box") : "hl";
+      let cls = boxed ? (seed === 7 ? "hl hl--box-red" : "hl hl--box") : "hl";
+      // P5R builds its ransom titles by swapping typefaces per letter
+      // (see the P5R font chart) — roughly a third of the letters leave
+      // Bungee for a black grotesque or a fat serif.
+      const fontSeed = (letterIndex * 3 + code) % 6;
+      if (fontSeed === 4) cls += " hl--grotesque";
+      else if (fontSeed === 5) cls += " hl--serif";
       letterIndex += 1;
       return `<span class="${cls}" style="transform: rotate(${ROTS[seed]}deg) translateY(${LIFTS[seed]}em)">${escapeChar(ch)}</span>`;
     })

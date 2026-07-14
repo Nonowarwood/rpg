@@ -281,7 +281,7 @@
   color: var(--text-secondary);
 }
 .xp-block__level-label b { color: var(--accent-red); font-weight: 800; }
-.xp-block__amount { font-variant-numeric: tabular-nums; font-weight: 800; }
+.xp-block__amount { font-family: var(--font-number); font-variant-numeric: tabular-nums; font-weight: 800; }
 
 .xp-bar {
   position: relative;
@@ -440,9 +440,9 @@
 .stat-tile:nth-child(even) { rotate: 0.6deg; }
 .stat-tile__icon { color: var(--accent-red); }
 .stat-tile__value {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 19px;
+  font-family: var(--font-number);
+  font-weight: 900;
+  font-size: 20px;
   font-variant-numeric: tabular-nums;
   color: var(--text-primary);
   line-height: 1.1;
@@ -529,6 +529,10 @@
 }
 .hl--box { background: var(--text-primary); color: var(--bg-void); }
 .hl--box-red { background: var(--accent-red); color: var(--text-primary); }
+/* Per-letter typeface swaps (P5R ransom method): a black grotesque
+   and a fat serif break Bungee's rhythm on ~1 letter in 3. */
+.hl--grotesque { font-family: 'Archivo Black', 'Arial Black', sans-serif; font-size: 0.96em; }
+.hl--serif { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 1.08em; }
 .hl-space { display: inline-block; width: 0.38em; }
 /* Eyebrow ribbons already sit on a red fill — drop the red shadow
    there or it smears into the background. */

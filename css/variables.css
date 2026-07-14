@@ -77,11 +77,17 @@
   --glow-red: 0 0 22px rgba(224, 16, 46, 0.35);
 
   /* ---------- Typography ----------
+     Aligned on the P5R font chart: Arsenal is the game's free
+     regular-text stand-in (note: draws ~15% wider than average),
+     Libre Franklin (Franklin Gothic) carries numbers/deadlines,
+     Bungee anchors display titles with Archivo Black + a system
+     serif mixed in per-letter by the heist lettering.
      Bungee ships one weight (400) and draws wide — display sizes
      across components.css are tuned down accordingly. Never request
      another weight; browsers would synthesize an ugly faux-bold. */
   --font-display: 'Bungee', 'Arial Black', sans-serif;
-  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Arsenal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-number: 'Libre Franklin', 'Franklin Gothic Medium', 'Arial Black', sans-serif;
 
   /* ---------- Spacing scale ---------- */
   --sp-1: 4px;
