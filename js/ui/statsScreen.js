@@ -94,7 +94,7 @@ export function renderStatsScreen() {
           <div class="stat-card__icon">${icon(def.icon, { size: 22 })}</div>
           <div class="stat-card__body">
             <div class="stat-card__top">
-              <span class="stat-card__name">${def.name}</span>
+              <span class="stat-card__name"><em>${def.name.slice(0, 3)}</em>${def.name.slice(3)}</span>
               <span class="stat-card__level">Niveau ${p.level}</span>
             </div>
             <div class="stat-card__bar"><div class="stat-card__bar-fill" data-stat="${key}" style="width:0%"></div></div>

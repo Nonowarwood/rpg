@@ -280,7 +280,24 @@
   font-weight: 700;
   color: var(--text-secondary);
 }
-.xp-block__level-label b { color: var(--accent-red); font-weight: 800; }
+/* "LV" sticker from the tabletop sheet: yellow chip + big number. */
+.xp-block__level-label i {
+  display: inline-block;
+  font-style: normal;
+  font-family: var(--font-number);
+  font-weight: 900;
+  font-size: 11px;
+  background: var(--accent-yellow);
+  color: var(--bg-void);
+  padding: 1px 6px;
+  rotate: -2deg;
+}
+.xp-block__level-label b {
+  font-family: var(--font-number);
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--text-primary);
+}
 .xp-block__amount { font-family: var(--font-number); font-variant-numeric: tabular-nums; font-weight: 800; }
 
 .xp-bar {
@@ -768,6 +785,17 @@
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
+/* First syllable highlighted yellow, like the sheet's "Int / Str /
+   Con" ability tags. */
+.stat-card__name em {
+  display: inline-block;
+  font-style: normal;
+  background: var(--accent-yellow);
+  color: var(--bg-void);
+  padding: 0 4px;
+  margin-right: 1px;
+  rotate: -1.5deg;
+}
 .stat-card__level {
   font-family: var(--font-number);
   font-size: 11.5px;
@@ -855,20 +883,41 @@
 .achievement-badge--unlocked .achievement-badge__name { color: var(--accent-yellow); }
 .achievement-badge--unlocked .achievement-badge__desc { color: var(--text-secondary); opacity: 1; }
 
-/* ---------- History list ---------- */
-.history-list { display: flex; flex-direction: column; gap: var(--sp-2); padding-bottom: var(--sp-6); }
+/* ---------- History list ----------
+   P5 tabletop-sheet "EQUIPMENT" checkerboard: rows alternate red
+   and black and stagger left/right in a loose zigzag. */
+.history-list { display: flex; flex-direction: column; gap: 6px; padding-bottom: var(--sp-6); }
 .history-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--sp-3) var(--sp-4);
-  background: var(--bg-glass);
-  border: 2px solid var(--border-glass);
-  border-left: 3px solid var(--border-glass-strong);
+  border: 2px solid transparent;
+}
+.history-item:nth-child(odd) {
+  background: var(--accent-red);
+  color: var(--bg-void);
+  margin-right: 18px;
+  rotate: -0.4deg;
+}
+.history-item:nth-child(even) {
+  background: #101013;
+  border-color: var(--accent-red);
+  color: var(--text-primary);
+  margin-left: 18px;
+  rotate: 0.4deg;
 }
 .history-item__name { font-size: 13px; font-weight: 700; }
-.history-item__date { font-size: 11px; color: var(--text-tertiary); }
-.history-item__xp { font-size: 12.5px; font-weight: 800; color: var(--accent-yellow); }
+.history-item__date { font-size: 11px; opacity: 0.65; }
+.history-item__xp {
+  font-family: var(--font-number);
+  font-size: 12px;
+  font-weight: 900;
+  padding: 2px 8px;
+  rotate: -2deg;
+}
+.history-item:nth-child(odd) .history-item__xp { background: var(--text-primary); color: var(--bg-void); }
+.history-item:nth-child(even) .history-item__xp { background: var(--accent-yellow); color: var(--bg-void); }
 
 .empty-state {
   text-align: center;
